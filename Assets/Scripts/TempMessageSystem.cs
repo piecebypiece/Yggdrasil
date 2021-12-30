@@ -7,13 +7,21 @@ public interface IEvent
 
 }
 
+
+
+
 public interface IEventListener
 {
+
 	void OnEvent(IEvent e);
 }
 
+
+
+
 public class TempMessageSystem : MonoBehaviour
 {
+
 	// Start is called before the first frame update
 	void Start()
 	{
