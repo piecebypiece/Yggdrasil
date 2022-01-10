@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e7f0f61e66503b4e91fea429f20d9e9, type: 3}
+  m_Name: BossStat_TableLoader
+  m_EditorClassIdentifier: 
+  filepath: Assets\00.Data\Txt\BossStat_Table.txt
+  DataList:
+  - No: 1
+    Name_KR: "\uB77C\uADF8\uB098\uB85C\uD06C"
+    Name_EN: Ragnarok
+    BossIndex: 21001
+    Atk: 50
+    HP: 2000
+    Def: 10
+    MaxTM: 1000
+    Speed: 300
+    MoveRange: 1
+    MoveTMUsed: 200
+    Skill1: 30051
+    Skill2: 30051
+    Skill3: 30051
+  - No: 2
+    Name_KR: "\uB4C0\uB77C\uD55C"
+    Name_EN: Durahan
+    BossIndex: 21002
+    Atk: 30
+    HP: 5000
+    Def: 20
+    MaxTM: 1000
+    Speed: 250
+    MoveRange: 1
+    MoveTMUsed: 200
+    Skill1: 30051
+    Skill2: 30051
+    Skill3: 30051
+  - No: 3
+    Name_KR: "\uD5EC\uB9AC\uC544"
+    Name_EN: Hellia
+    BossIndex: 21003
+    Atk: 80
+    HP: 3000
+    Def: 5
+    MaxTM: 1000
+    Speed: 300
+    MoveRange: 2
+    MoveTMUsed: 150
+    Skill1: 30051
+    Skill2: 30051
+    Skill3: 30051

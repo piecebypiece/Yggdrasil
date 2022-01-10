@@ -95,12 +95,12 @@ namespace TempCodes
 			IEventHandler eve2 = new EventHandler2();
 
 
-			Subscribe<temp>(eve1);
-			Subscribe<temp>(eve2);
+			//Subscribe<temp>(eve1);
+			//Subscribe<temp>(eve2);
 
 			Notify();
 
-			Unsubscribe<temp>(eve2);
+			//Unsubscribe<temp>(eve2);
 
 			Notify();
 		}
