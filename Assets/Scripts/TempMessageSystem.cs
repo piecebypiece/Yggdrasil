@@ -2,6 +2,75 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class DamageEvent : TempCodes.IEvent
+{
+	public void Dispose()
+	{
+		throw new System.NotImplementedException();
+	}
+}
+
+public class MoveEvent : TempCodes.IEvent
+{
+
+	public void Dispose()
+	{
+		throw new System.NotImplementedException();
+	}
+}
+
+public class AttackEvent : TempCodes.IEvent
+{
+
+
+	public void Dispose()
+	{
+		throw new System.NotImplementedException();
+	}
+}
+
+
+public class AttackHandler : TempCodes.IEventHandler
+{
+
+
+	public void OnNotify(TempCodes.IEvent e)
+	{
+
+		Debug.Log($"{e.ToString()} 공격");
+		//공격에관한 처리
+	}
+
+}
+
+
+public class MoveHandler : TempCodes.IEventHandler
+{
+
+	public void OnNotify(TempCodes.IEvent e)
+	{
+
+		Debug.Log($"{e.ToString()} 이동");
+		//이동에관한 처리
+	}
+
+}
+
+public class DamageHandler : TempCodes.IEventHandler
+{
+
+	public void OnNotify(TempCodes.IEvent e)
+	{
+
+		Debug.Log($"{e.ToString()} 대미지");
+		//대미지에관한 처리
+	}
+
+}
+
+
+
+
 
 
 
@@ -20,26 +89,6 @@ namespace TempCodes
 
 	}
 
-	//옵저버 구현클래스1(이벤트 종류1)
-	public class MoveEventHandler : IEventHandler
-	{
-		//대상타입의 클래스에서 이 메소드를 실행시킴
-		public virtual void OnNotify(IEvent e)
-		{
-			Debug.Log($"{e.ToString()} 무브 이벤트 호출");
-		}
-
-	}
-
-	//옵저버 구현클래스2(이벤트 종류2)
-	public class DamageEventHandler : IEventHandler
-	{
-		public void OnNotify(IEvent e)
-		{
-			Debug.Log($"{e.ToString()} 대미지 이벤트 호출");
-		}
-	}
-
 
 
 	//대상클래스 == 직접적으로 이벤트를 호출할 클래스
@@ -47,50 +96,84 @@ namespace TempCodes
 	public class TempMessageSystem : MonoBehaviour
 	{
 
-		//이벤트들을 리스트로 관리
+		//이벤트와 핸들러들을 관리하는 사전
 		Dictionary<System.Type, List<IEventHandler>> EventListenerDic = new Dictionary<System.Type, List<IEventHandler>>();
+
+		//타입과 이벤트를 매치시켜주는 사전
+		Dictionary<System.Type, IEvent> EventDic = new Dictionary<System.Type, IEvent>();
+
+		//이벤트를 관리하는 리스트
 		List<IEvent> eventList = new List<IEvent>();
 
+
+		//타입(T) => 이벤트들.
+
 		#region 이벤트리스트 관련
-		public void AddEvent(TempCodes.IEvent e)
+
+		public void AddEvent(TempCodes.IEvent e)  //리스트에 이벤트 추가
 		{
 			eventList.Add(e);
+
 		}
 
-		public void RemoveEvent(TempCodes.IEvent e)
+		public void RemoveEvent(TempCodes.IEvent e) //리스트에 이벤트 제거
 		{
 			eventList.Remove(e);
 		}
-		#endregion
 
+
+
+		public void AddEventdic(TempCodes.IEvent e) //사전에 타입과 이벤트 매칭
+		{
+			if (!EventDic.ContainsKey(e.GetType()))
+			{
+				EventDic.Add(e.GetType(), e);
+			}
+			Debug.Log($"EventDic에 {e.ToString()} 추가");
+			Debug.Log($"EventDic.Count:{EventDic.Count}");
+
+		}
+
+		public void RemoveEventdic(TempCodes.IEvent e) //사전에 매칭정보 지우기
+		{
+
+			if (EventDic.ContainsKey(e.GetType())) EventDic.Remove(e.GetType(), out e);
+			Debug.Log($"EventDic에 {e.ToString()} 삭제");
+			Debug.Log($"EventDic.Count:{EventDic.Count}");
+		}
+
+		#endregion
 
 
 		#region 구독(Subscribe) 관련
 		//구독
 		public void Subscribe<T>(IEventHandler handler)
 		{
-			//타입(T)이 있는지 찾아보고 있으면 이벤트(e) 추가.
+			// 타입(T)이 있는지 찾아보고 있으면 핸들러 추가.
 			if (EventListenerDic.ContainsKey(typeof(T)))
 			{
 				EventListenerDic[typeof(T)].Add(handler);
 			}
-			else //없으면 해당 타입(T)에 관련된 목록을 만들고 이벤트(e) 추가
+			else //없으면 해당 타입(T)에 관련된 목록을 만들고 핸들러(handler) 추가
 			{
 				EventListenerDic.Add(typeof(T), new List<IEventHandler>());
 				EventListenerDic[typeof(T)].Add(handler);
 			}
 		}
+
+
 		//구독 - 복수
 		public void Subscribe<T>(params IEventHandler[] handlerList)
 		{
 			foreach (var element in handlerList)
 			{
+				//타입(T)이 있는지 찾아보고 있으면 핸들러들을 추가
 				if (EventListenerDic.ContainsKey(typeof(T)))
 				{
 					EventListenerDic[typeof(T)].Add(element);
 
 				}
-				else
+				else //없으면 해당 타입(T)에 관련된 목록을 만들고 핸들러들(handlerList)을 추가
 				{
 					EventListenerDic.Add(typeof(T), new List<IEventHandler>());
 					EventListenerDic[typeof(T)].Add(element);
@@ -100,8 +183,8 @@ namespace TempCodes
 
 		}
 
-		//해당 이벤트를 구독한 멤버들의 목록을 보여준다.(1개의 이벤트만)
-		public void SubscribeMember<T>()
+		//해당 이벤트를 구독한 멤버들의 목록을 보여준다.(1개의 타입(T)만)
+		public void ShowSubscribeMember<T>()
 		{
 			var listners = EventListenerDic[typeof(T)];
 
@@ -116,8 +199,8 @@ namespace TempCodes
 
 		}
 
-		//해당 이벤트들을 구독한 멤버들의 목록들을 보여준다.(복수의 이벤트 가능)
-		public void SubscribeMember(params IEvent[] eList)
+		//해당 이벤트들을 구독한 멤버들의 목록들을 보여준다.(복수의 타입(T)가능)
+		public void ShowSubscribeMember(params IEvent[] eList)
 		{
 			foreach (var element in eList)
 			{
@@ -141,7 +224,8 @@ namespace TempCodes
 		//해지
 		public void Unsubscribe<T>(IEventHandler handler)
 		{
-			if (EventListenerDic[typeof(T)].Contains(handler)) EventListenerDic[typeof(T)].Remove(handler);  //사전에서 지워준다.
+			//타입(T)에 해당하는 리스트 목록중에 지정한 핸들러(handler)가 있으면 지워준다.
+			if (EventListenerDic[typeof(T)].Contains(handler)) EventListenerDic[typeof(T)].Remove(handler);
 		}
 
 		//해지 - 복수
@@ -149,6 +233,7 @@ namespace TempCodes
 		{
 			foreach (var element in handlereList)
 			{
+				//타입(T)에 해당하는 리스트 목록중에 지정한 핸들러들(handlereList)이 있으면 지워준다.
 				if (EventListenerDic[typeof(T)].Contains(element)) EventListenerDic[typeof(T)].Remove(element);
 			}
 		}
@@ -157,36 +242,43 @@ namespace TempCodes
 
 		#region 알림(Notify) 관련
 
+		//알림 - 핸들러 제외
 		public void Notify<T>(params TempCodes.IEventHandler[] handlerList)
 		{
+			//지정 타입(T)과 핸들러 리스트를 받는다.
 
-			var listners = EventListenerDic[typeof(T)];
+			var listners = EventListenerDic[typeof(T)]; //해당 타입(T)에 관련된 리스트를 받아온다. 
 
+			bool check;
 
-
-			//제외 알림이 현재 두번씩 호출됨 한번씩만 호출되도록 변경하기.
-			foreach (var listner in listners)
+			foreach (var listner in listners)  //그 리스트를 구독하는 사람들중
 			{
-				foreach (var handler in handlerList)
+				check = false;
+				foreach (var handler in handlerList)  //핸들러 리스트에 적혀있는 핸들러가 있다면
 				{
-					if (!listner.Equals(handler))
+					//핸들러 리스트에 적혀있는 핸들러가 있다면...
+					if (string.Compare(handler.ToString(), listner.ToString(), false) == 0)
 					{
-						Debug.Log($"{handler.ToString()}은 알림에서 제외합니다.");
+						check = true;
+						Debug.Log($"{typeof(T).ToString()}의{handler.ToString()}은 알림에서 제외합니다.");
 					}
 
 				}
-			}
 
+				//지정된 핸들러 리스트에 없다면 알림을 보내준다.
+				if (!check)
+					listner.OnNotify(EventDic[typeof(T)]);
+
+			}
 		}
 
 
-		//개인적인(지정한(T)이벤트(복수도 가능)의 구독자)알림
+
+		//알림- 선택(이벤트 리스트에서 선택한(단일,복수 가능) 이벤트를 구독하고있는 모든 핸들러들에게 
 		public void Notify(params TempCodes.IEvent[] eList)
 		{
-
 			foreach (var element in eList)
 			{
-
 				if (eventList.Contains(element))
 				{
 					var listners = EventListenerDic[element.GetType()];
@@ -200,21 +292,20 @@ namespace TempCodes
 				{
 					Debug.Log($"{element.ToString()}는 이벤트 리스트에 존재하지 않습니다...<!먼저 이벤트 리스트에 추가해주세요!>");
 				}
-
-
 			}
 
 		}
 
 
-		//전체(이벤트 리스트에 있는 전 이벤트의 구독자)에게 알림
+
+
+		//알림 - 전체(이벤트 리스트에 있는 이벤트를 구독하고있는 모든 핸들러들에게)
 		public void Notify()
 		{
 
 			//foreach 이용
 			foreach (var e in eventList)
 			{
-
 				var listners = EventListenerDic[e.GetType()];
 
 				foreach (var listner in listners)
@@ -222,9 +313,24 @@ namespace TempCodes
 					listner.OnNotify(e);
 				}
 			}
+		}
+
+
+		#endregion
+
+
+
+		public void ResetData()
+		{
+			eventList.Clear();
+			EventDic.Clear();
+			EventListenerDic.Clear();
+
+			Debug.Log($"eventList.Count:{eventList.Count}, " +
+				$"EventDic.Count:{EventDic.Count}, " +
+				$"EventListenerDic.Count:{EventListenerDic.Count}");
 
 		}
-		#endregion
 
 
 		// Start is called before the first frame update

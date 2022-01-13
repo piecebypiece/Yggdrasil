@@ -4,76 +4,9 @@ using UnityEngine;
 
 
 
-public class DamageEvent : TempCodes.IEvent
-{
-	public void Dispose()
-	{
-		throw new System.NotImplementedException();
-	}
-}
-
-public class MoveEvent : TempCodes.IEvent
-{
-	public void Dispose()
-	{
-		throw new System.NotImplementedException();
-	}
-}
-
-public class AttackEvent : TempCodes.IEvent
-{
-
-	public void Dispose()
-	{
-		throw new System.NotImplementedException();
-	}
-}
-
-
-public class AttackHandler : TempCodes.IEventHandler
-{
-
-
-	public void OnNotify(TempCodes.IEvent e)
-	{
-
-		Debug.Log($"{e.ToString()} 공격");
-
-		//공격에관한 처리
-	}
-}
-
-
-public class MoveHandler : TempCodes.IEventHandler
-{
-
-	public void OnNotify(TempCodes.IEvent e)
-	{
-
-		Debug.Log($"{e.ToString()} 이동");
-
-		//이동에관한 처리
-	}
-
-}
-
-public class DamageHandler : TempCodes.IEventHandler
-{
-
-	public void OnNotify(TempCodes.IEvent e)
-	{
-
-		Debug.Log($"{e.ToString()} 대미지");
-
-		//대미지에관한 처리
-	}
-
-}
-
-
-
 public class Action : MonoBehaviour
 {
+
 	//시스템
 	TempCodes.TempMessageSystem eSystem;
 
@@ -84,65 +17,49 @@ public class Action : MonoBehaviour
 	MoveEvent me;
 
 
-
 	//핸들러 목록
 	AttackHandler atkHandler;
 	DamageHandler dmgHandler;
 	MoveHandler moveHandler;
 
 
-
-
-
-
 	// Start is called before the first frame update
 	void Start()
 	{
-		//시스템 생성
+
+		//순서 
+
+		// 1.시스템 생성
 		eSystem = new TempCodes.TempMessageSystem();
 
-		//이벤트 생성
+		// 2.이벤트 생성
 		ae = new AttackEvent();
 		de = new DamageEvent();
 		me = new MoveEvent();
 
 
-
-
-		//핸들러 생성
+		// 3.핸들러 생성
 		atkHandler = new AttackHandler();
 		dmgHandler = new DamageHandler();
 		moveHandler = new MoveHandler();
 
 
-		//이벤트 리스트에 이벤트 등록
+		// 4.이벤트 리스트에 추가
 		eSystem.AddEvent(ae);
 		eSystem.AddEvent(de);
 		eSystem.AddEvent(me);
 
+		// 5.타입과 이벤트 매칭
+		eSystem.AddEventdic(ae);
+		eSystem.AddEventdic(de);
+		eSystem.AddEventdic(me);
 
-		//이벤트를 들을 핸들러 등록.
+
+		// 6.원하는 이벤트를 들을 핸들러들 추가(구독) 및 해지
 		eSystem.Subscribe<AttackEvent>(atkHandler);
 		eSystem.Subscribe<DamageEvent>(dmgHandler);
 		eSystem.Subscribe<MoveEvent>(moveHandler);
 
-
-		//SubscribeMember 디버깅용
-		//eSystem.Subscribe<AttackEvent>(moveHandler, dmgHandler);
-		//eSystem.Subscribe<DamageEvent>(atkHandler, moveHandler);
-		//eSystem.Subscribe<MoveEvent>(atkHandler, dmgHandler);
-
-		//eSystem.SubscribeMember(ae,me,de);
-
-		//eSystem.Unsubscribe<AttackEvent>(moveHandler, dmgHandler);
-		//eSystem.Unsubscribe<DamageEvent>(atkHandler, moveHandler);
-		//eSystem.Unsubscribe<MoveEvent>(atkHandler, dmgHandler);
-
-
-		//오류 체크
-		eSystem.Subscribe<AttackEvent>(moveHandler, dmgHandler);
-
-		eSystem.Notify<AttackEvent>(moveHandler, dmgHandler);
 
 
 
@@ -152,6 +69,14 @@ public class Action : MonoBehaviour
 	void Update()
 	{
 
+		if (Input.GetKeyDown(KeyCode.Escape))
+		{
+			//게임 종료시 데이타 초기화.
+			eSystem.ResetData();
+		}
+
+
+		// 디버깅용
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
 			eSystem.Notify();
