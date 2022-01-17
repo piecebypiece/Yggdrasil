@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25c03d6a80ba51e449f9546f1c892fe2, type: 3}
+  m_Name: CharStat_TableLoader
+  m_EditorClassIdentifier: 
+  filepath: D:\git\Yggdrasil\Assets\00.Data\Txt\CharStat_Table.txt
+  DataList:
+  - No: 1
+    Name_KR: "\uB108"
+    Name_EN: You
+    CharIndex: 10001
+    PhyDef: 5
+    MagDef: 5
+    Atk: 10
+    EQuipCost: 30
+    MoveSpeed: 20
+    AtkSpeed: 10
+    HP: 100
+    SumSpeed: 50
+    SumPer: 60
+    SumRange: 1
+    AtkRange: 20
+    Sight: 50
+  - No: 2
+    Name_KR: "\uB098"
+    Name_EN: Me
+    CharIndex: 10002
+    PhyDef: 5
+    MagDef: 5
+    Atk: 10
+    EQuipCost: 30
+    MoveSpeed: 20
+    AtkSpeed: 10
+    HP: 100
+    SumSpeed: 50
+    SumPer: 60
+    SumRange: 1
+    AtkRange: 20
+    Sight: 50
