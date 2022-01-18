@@ -53,36 +53,32 @@ public class DataTableManager : MonoBehaviour
             #endregion
             m_DataTables.Add(i, m_DataTableList.Where(item => i.ToString() + "_TableLoader" == item.name).SingleOrDefault());
         }
+
+        // ++
+        if (null == instance)
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
     }
 
     // ++
+    #region 싱글톤
+    
+    private static DataTableManager instance = null;
 
-    void Start()
+    public static DataTableManager Instance
     {
-        // 해당보스 TableExcel 가져오기
-        BossStat_TableExcel tmp = GetStatData(21001);
-
-        Debug.Log(tmp.Name_KR);
-    }
-
-    #region 스탯 정보 가져오기
-    // BossIndex에 해당되는 보스 TableExcel을 가져온다.
-    public BossStat_TableExcel GetStatData(int BossIndex)
-    {
-        BossStat_TableExcel a = new BossStat_TableExcel();
-        var list = GetDataTable<BossStat_TableExcelLoader>().DataList;
-
-        foreach (var it in list)
+        get
         {
-            if (BossIndex == it.BossIndex)
+            if (null == instance)
             {
-                a = it;
-                return a;
+                return null;
             }
+            return instance;
         }
-        return a;
     }
-    #endregion
 
+    #endregion
 }
 
