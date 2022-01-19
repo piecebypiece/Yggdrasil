@@ -15,5 +15,8 @@ namespace Yggdrasil
 		public float Sight { get; set; }
 		public int HP { get; set; }
 		public int MaxHP { get; set; }
+
+
 	}
+
 }
