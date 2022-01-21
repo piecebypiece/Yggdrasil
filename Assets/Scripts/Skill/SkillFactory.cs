@@ -13,8 +13,6 @@ namespace PlayerSkillSet  //플레이어 스킬 셋팅 관련
 	{
 		//지정해주는 타입에 따라 액션에서 나가는 스킬이 달라지도록
 		public abstract void SkillAction(AbilityType type);
-
-		
 	}
 
 	//발동할 스킬의 능력
