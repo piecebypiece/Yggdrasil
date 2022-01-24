@@ -1,38 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class BossManager : MonoBehaviour
+namespace Yggdrasil
 {
-    [SerializeField]
-    private int index; // 각 보스가 가지고 있는 인덱스번호
-
-    private BossStat_TableExcel TableExcel;
-
-    #region Boss스탯 정보 가져오기
-    // BossIndex에 해당되는 보스 TableExcel을 가져온다.
-    public BossStat_TableExcel GetStatData(int _index)
+    public class BossManager : MonoBehaviour
     {
-        BossStat_TableExcel stat = new BossStat_TableExcel();
-        var list = DataTableManager.Instance.GetDataTable<BossStat_TableExcelLoader>().DataList;
+        [SerializeField]
+        private int index; // 각 보스가 가지고 있는 인덱스번호
 
-        foreach (var it in list)
+        private BossStat_TableExcel TableExcel;
+        DataTableManager M_DataTable => DataTableManager.Instance;
+
+        #region Boss스탯 정보 가져오기
+        // BossIndex에 해당되는 보스 TableExcel을 가져온다.
+
+        public BossStat_TableExcel GetStatData(int _index)
         {
-            if (_index == it.BossIndex)
-            {
-                stat = it;
-                return stat;
-            }
+            BossStat_TableExcelLoader m_BossStat = M_DataTable.GetDataTable<BossStat_TableExcelLoader>();
+            BossStat_TableExcel statData = m_BossStat.DataList.Where(item => item.BossIndex == _index).SingleOrDefault();
+            return statData;
         }
-        return stat;
-    }
-    #endregion
+        #endregion
 
-    void Start()
-    {
-        // 해당보스 TableExcel 가져오기
-        TableExcel = GetStatData(index);
+        public BossManager(int _index)
+        {
+            TableExcel = GetStatData(_index);
+        }
 
-        Debug.Log(TableExcel.Name_KR);
+        void Start()
+        {
+            var obj = new BossManager(21001);
+
+            Debug.Log($"{obj.TableExcel.Name_KR}");
+        }
     }
 }
