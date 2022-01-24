@@ -9,34 +9,39 @@ using UnityEngine;
  */
 namespace Singleton_Ver1
 {
-	public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
-	{
-		[SerializeField]
-		protected bool flag;
-		private static T instance;
-		public static T Instance
-		{
-			get
-			{
-				Singleton_Ver1.Singleton<T>[] objs = FindObjectsOfType<Singleton_Ver1.Singleton<T>>(true);
-				GameObject obj = objs.Where(item => item.flag == true).FirstOrDefault().gameObject;
-				if(obj == null)
-				{
-					if(objs.Length>0)
-					{
-						return objs[0].GetComponent<T>();
-					}
-					obj = new GameObject(typeof(T).Name);
-					obj.AddComponent<T>();
-				}
-				else
-				{
-					instance = obj.GetComponent<T>();
-				}
-				return instance;
-			}
-		}
-	}
+    public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
+    {
+        [SerializeField]
+        protected bool flag;
+        private static T instance;
+        public static T Instance
+        {
+            get
+            {
+                Singleton_Ver1.Singleton<T>[] objs = FindObjectsOfType<Singleton_Ver1.Singleton<T>>(true);
+                GameObject obj;
+                if (objs.Length < 0)
+                {
+                    obj = objs.Where(item => item.flag == true).FirstOrDefault().gameObject;
+                }
+                else obj = null;
+                if (obj == null)
+                {
+                    if (objs.Length > 0)
+                    {
+                        return objs[0].GetComponent<T>();
+                    }
+                    obj = new GameObject(typeof(T).Name);
+                    obj.AddComponent<T>();
+                }
+                else
+                {
+                    instance = obj.GetComponent<T>();
+                }
+                return instance;
+            }
+        }
+    }
 
 }
 
@@ -54,32 +59,32 @@ namespace Singleton_Ver1
   */
 namespace Singleton_Ver2
 {
-	public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
-	{
-		[SerializeField]
-		protected bool flag;
-		private static readonly Lazy<T> _instance = 
-		new Lazy<T>(() =>
-		{
-			Singleton_Ver2.Singleton<T>[] objs = FindObjectsOfType<Singleton_Ver2.Singleton<T>>(true);
-			GameObject obj = objs.Where(item => item.flag == true).FirstOrDefault().gameObject;
-			if(obj==null)
-			{
-				if(objs.Length>0)
-				{
-					return objs[0].GetComponent<T>();
-				}
-				obj = new GameObject(typeof(T).Name);
-				obj.AddComponent<T>();
-			}	
-			return obj.GetComponent<T>();
-		});
-		public static T Instance
-		{
-			get
-			{
-				return _instance.Value;
-			}
-		}
-	}
+    public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
+    {
+        [SerializeField]
+        protected bool flag;
+        private static readonly Lazy<T> _instance =
+        new Lazy<T>(() =>
+        {
+            Singleton_Ver2.Singleton<T>[] objs = FindObjectsOfType<Singleton_Ver2.Singleton<T>>(true);
+            GameObject obj = objs.Where(item => item.flag == true).FirstOrDefault().gameObject;
+            if (obj == null)
+            {
+                if (objs.Length > 0)
+                {
+                    return objs[0].GetComponent<T>();
+                }
+                obj = new GameObject(typeof(T).Name);
+                obj.AddComponent<T>();
+            }
+            return obj.GetComponent<T>();
+        });
+        public static T Instance
+        {
+            get
+            {
+                return _instance.Value;
+            }
+        }
+    }
 }
