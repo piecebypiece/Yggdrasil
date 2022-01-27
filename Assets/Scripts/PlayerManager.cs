@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using PlayerSkillSet;
+using Yggdrasil.PlayerSkillSet;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -15,6 +15,7 @@ public class PlayerManager : MonoBehaviour
 
 	//스킬
 	private Skill skill;
+	private SkillManager skillMgr;
 
 
 	public Text SkillType_txt;
@@ -60,25 +61,36 @@ public class PlayerManager : MonoBehaviour
 		{
 			//스킬을 사용할수 있는지 1차 점검(마나,쿨타임 등 체크)
 
+
 			//1차점검에서 통과되면 스킬발동
-			skill.SkillAction(AbilityType.Damage);
-			Debug.Log("1");
+			if(skillMgr.SkillCheck())
+			{
+				skill.SkillAction(AbilityType.Damage);
+				Debug.Log("1");
+			}
+			
 		}
 
 		if (Input.GetKeyDown(KeyCode.Alpha2))
 		{
 			//스킬을 사용할수 있는지 1차 점검(마나,쿨타임 등 체크)
-
-			skill.SkillAction(AbilityType.Distance);
-			Debug.Log("2");
+			if (skillMgr.SkillCheck())
+			{
+				skill.SkillAction(AbilityType.Distance);
+				Debug.Log("2");
+			}
+			
 		}
 
 		if (Input.GetKeyDown(KeyCode.Alpha3))
 		{
 			//스킬을 사용할수 있는지 1차 점검(마나,쿨타임 등 체크)
-
-			skill.SkillAction(AbilityType.Speed);
-			Debug.Log("3");
+			if (skillMgr.SkillCheck())
+			{
+				skill.SkillAction(AbilityType.Speed);
+				Debug.Log("3");
+			}
+			
 		}
 
 
@@ -108,6 +120,8 @@ public class PlayerManager : MonoBehaviour
 
 		skillType_num = 0;
 		skill = SkillFactory.SkillTypeSet(SkillType.Attack);
+		skillMgr = new SkillManager();
+
 	}
 
     // Update is called once per frame

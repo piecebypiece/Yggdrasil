@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace PlayerSkillSet  //플레이어 스킬 셋팅 관련
+namespace Yggdrasil.PlayerSkillSet  //플레이어 스킬 셋팅 관련
 {
 	
 
@@ -65,17 +65,17 @@ namespace PlayerSkillSet  //플레이어 스킬 셋팅 관련
 			switch (type)
 			{
 				case PlayerSkillSet.AbilityType.Damage:
-					Action.Instance.Attack_Damage();
+					Action.Instance.AttackDamage();
 					Debug.Log("공격-피해형 스킬");
 					break;
 
 				case PlayerSkillSet.AbilityType.Distance:
-					Action.Instance.Attack_Distance();
+					Action.Instance.AttackDistance();
 					Debug.Log("공격-거리형 스킬");
 					break;
 
 				case PlayerSkillSet.AbilityType.Speed:
-					Action.Instance.Attack_Speed();
+					Action.Instance.AttackSpeed();
 					Debug.Log("공격-지원형 스킬");
 					break;
 
@@ -93,17 +93,17 @@ namespace PlayerSkillSet  //플레이어 스킬 셋팅 관련
 			switch (type)
 			{
 				case PlayerSkillSet.AbilityType.Damage:
-					Action.Instance.Defense_Damage();
+					Action.Instance.DefenseDamage();
 					Debug.Log("방어-피해형 스킬");
 					break;
 
 				case PlayerSkillSet.AbilityType.Distance:
-					Action.Instance.Defense_Distance();
+					Action.Instance.DefenseDistance();
 					Debug.Log("방어-거리형 스킬");
 					break;
 
 				case PlayerSkillSet.AbilityType.Speed:
-					Action.Instance.Defense_Speed();
+					Action.Instance.DefenseSpeed();
 					Debug.Log("방어-지원형 스킬");
 					break;
 			}
@@ -121,18 +121,18 @@ namespace PlayerSkillSet  //플레이어 스킬 셋팅 관련
 			{
 				case PlayerSkillSet.AbilityType.Damage:
 					//여기는 스킬 실행내용만(실제로 스킬 실행은 액션의 함수)
-					Action.Instance.Support_Damage();
+					Action.Instance.SupportDamage();
 					//디버그
 					Debug.Log("지원-피해형 스킬");
 					break;
 
 				case PlayerSkillSet.AbilityType.Distance:
-					Action.Instance.Support_Distance();
+					Action.Instance.SupportDistance();
 					Debug.Log("지원-거리형 스킬");
 					break;
 
 				case PlayerSkillSet.AbilityType.Speed:
-					Action.Instance.Support_Speed();
+					Action.Instance.SupportSpeed();
 					Debug.Log("지원-지원형 스킬");
 					break;
 			}
