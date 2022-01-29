@@ -58,7 +58,7 @@ public class MapManager : MonoBehaviour
     }
     void CreateHexTileMap()
     {
-        Vector3 m_StartPoint = m_StartPos;
+        float offset = 5f;
         Vector3 m_CurrentPos = m_StartPos;
         Ground = Instantiate<GameObject>(GroundPrefab);
         Ground.transform.localScale = new Vector3(GroundNomalWidth * m_mapWidth, 0, GroundNomalHeight * m_mapHeight);
@@ -68,14 +68,14 @@ public class MapManager : MonoBehaviour
         {
             if (y % 2 != 0)
             {
-                m_CurrentPos.x = m_StartPos.x + m_CToSVertex_Length;
+                m_CurrentPos.x = m_StartPos.x + m_CToSLine_Length + offset/ 2;
             }
             else m_CurrentPos.x = m_StartPos.x;
             for (int x = 0; x < m_mapWidth; ++x)
             {
                 GameObject obj = Instantiate<GameObject>(HexTilePrefab);
                 obj.transform.position = m_CurrentPos;
-                m_CurrentPos.x += m_CToSVertex_Length * 2;
+                m_CurrentPos.x += m_CToSLine_Length*2+offset;
             }
             m_CurrentPos.z += m_CToSLine_Length * 2;
         }

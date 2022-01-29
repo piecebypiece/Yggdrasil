@@ -1985,9 +1985,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_StartPos: {x: 0, y: 0, z: 0}
-  m_mapWidth: 0
-  m_mapHeight: 0
-  flag: 0
+  m_mapWidth: 7
+  m_mapHeight: 8
+  flag: 1
   HexTilePrefab: {fileID: 6929672301327284495, guid: b03733992338fda45854fc9050f61982, type: 3}
   GroundPrefab: {fileID: 2103052233619837575, guid: c51555a54245b994e8f59b5430e1618b, type: 3}
 --- !u!4 &1596498931
