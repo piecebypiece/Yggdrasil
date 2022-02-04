@@ -12,17 +12,17 @@ public class Action : MonoBehaviour
 
 	public enum SkillList
 	{
-		ATTACK_DMG = 11,
-		ATTACK_DIS,
-		ATTACK_SPD,
+		AttackDmg = 11,
+		AttackDis,
+		AttackSpd,
 
-		DEFENSE_DMG = 21,
-		DEFENSE_DIS,
-		DEFENSE_SPD,
+		DefenseDmg = 21,
+		DefenseDis,
+		DefenseSpd,
 
-		SUPPORT_DMG = 31,
-		SUPPORT_DIS,
-		SUPPORT_SPD
+		SupportDmg = 31,
+		SupportDis,
+		SupportSpd
 
 	}
 
@@ -32,8 +32,8 @@ public class Action : MonoBehaviour
 
 
 
-	public GameObject Spirit_Prefab;  //임시
-	private SkillManager skillMgr;
+	public GameObject SpiritPrefab;  //임시
+	//private SkillManager skillMgr;
 	private Vector3 direction;
 
 
@@ -125,7 +125,7 @@ public class Action : MonoBehaviour
 
 			switch (skill)
 			{
-				case SkillList.DEFENSE_DMG:
+				case SkillList.DefenseDmg:
 					{
 						//범위내의 플레이어를 찾아서 
 						colls = Physics.OverlapSphere(spirit.transform.position, range, 1 << 8);  //8번째 레이어 = Player
@@ -139,7 +139,7 @@ public class Action : MonoBehaviour
 					}
 					break;
 
-				case SkillList.DEFENSE_DIS:
+				case SkillList.DefenseDis:
 					{
 						attack_time += Time.deltaTime;
 
@@ -170,7 +170,7 @@ public class Action : MonoBehaviour
 					}
 					break;
 
-				case SkillList.DEFENSE_SPD:
+				case SkillList.DefenseSpd:
 					{
 						//범위내의 플레이어를 찾아서 
 						if (range_check)
@@ -190,7 +190,7 @@ public class Action : MonoBehaviour
 					}
 					break;
 
-				case SkillList.SUPPORT_DMG:
+				case SkillList.SupportDmg:
 					{
 						//범위내의 적을 찾아서 
 						colls = Physics.OverlapSphere(spirit.transform.position, range, 1 << 9);  //9번째 레이어 = Enemy
@@ -220,7 +220,7 @@ public class Action : MonoBehaviour
 		float attack_time = 0f;
 
 
-		if (skill != SkillList.ATTACK_DIS)
+		if (skill != SkillList.AttackDis)
 		{
 			//적에게 이동.
 			while (true)
@@ -248,7 +248,7 @@ public class Action : MonoBehaviour
 
 			switch (skill)
 			{
-				case SkillList.ATTACK_DMG:
+				case SkillList.AttackDmg:
 					{
 						int randvalue = 0;
 
@@ -268,7 +268,7 @@ public class Action : MonoBehaviour
 
 					}
 					break;
-				case SkillList.ATTACK_DIS:
+				case SkillList.AttackDis:
 					{
 						attack_time += Time.deltaTime;
 
@@ -291,14 +291,14 @@ public class Action : MonoBehaviour
 
 					}
 					break;
-				case SkillList.ATTACK_SPD:
+				case SkillList.AttackSpd:
 					{
 						attack_time += Time.deltaTime;
 
 						if (attack_time >= 0.33f)
 						{
 							attack_time = 0f;
-							//지정범위내의 모든 에너미(몹들만)를 자신의 위치로 당긴 후
+							//지정범위내의 모든 에너미를 찾은 후
 							Collider[] colls = Physics.OverlapSphere(spirit.transform.position, range, 1 << 9);  //9번째 레이어 = Enemy
 
 							foreach (var rangeCollider in colls)
@@ -310,7 +310,7 @@ public class Action : MonoBehaviour
 						}
 					}
 					break;
-				case SkillList.SUPPORT_DIS:
+				case SkillList.SupportDis:
 					{
 						if (spirit_time < 0.75f)
 						{
@@ -335,13 +335,10 @@ public class Action : MonoBehaviour
 								Debug.Log($"{rangeCollider.name}는 스턴에 걸렸습니다.");
 							}
 						}
-
-
-
 					}
 
 					break;
-				case SkillList.SUPPORT_SPD:
+				case SkillList.SupportSpd:
 					{
 						//범위내의 적을 찾는다.
 						Collider[] colls = Physics.OverlapSphere(spirit.transform.position, range, 1 << 9);  //9번째 레이어 = Enemy
@@ -367,19 +364,19 @@ public class Action : MonoBehaviour
 	#region SupportSkill 
 	public void SupportDamage()  //지원-피해
 	{
-		GameObject SupDmg_Spirit = Instantiate(Spirit_Prefab);
+		GameObject SupDmg_Spirit = Instantiate(SpiritPrefab);
 
 		//정령을 플레이어 위치에 이동.  -> 나중에 현재있는 타일 중앙에 위치시켜야함(이미 타일중앙에 정령이 있을경우 설치불가)
 		SupDmg_Spirit.transform.position = PlayerManager.p_Object.transform.position;
 
-		StartCoroutine(InstallSprit(SupDmg_Spirit, 2f, 5f, SkillList.SUPPORT_DMG));
+		StartCoroutine(InstallSprit(SupDmg_Spirit, 2f, 5f, SkillList.SupportDmg));
 	}
 
 
 	public void SupportDistance() //지원-거리
 	{
 		GameObject nearEnemy = null;
-		GameObject SupDis_Spirit = Instantiate(Spirit_Prefab);
+		GameObject SupDis_Spirit = Instantiate(SpiritPrefab);
 		//정령을 플레이어 위치에 이동
 		SupDis_Spirit.transform.position = PlayerManager.p_Object.transform.position;
 
@@ -389,13 +386,13 @@ public class Action : MonoBehaviour
 		if (nearEnemy == null)
 			return;
 		else
-			StartCoroutine(TrackingSpirit(SupDis_Spirit, nearEnemy, 1.5f, 5f, SkillList.SUPPORT_DIS));
+			StartCoroutine(TrackingSpirit(SupDis_Spirit, nearEnemy, 1.5f, 5f, SkillList.SupportDis));
 	}
 
 	public void SupportSpeed()  //지원-이동
 	{
 		GameObject nearEnemy = null;
-		GameObject SupSpeed_Spirit = Instantiate(Spirit_Prefab);
+		GameObject SupSpeed_Spirit = Instantiate(SpiritPrefab);
 		//정령을 플레이어 위치에 이동
 		SupSpeed_Spirit.transform.position = PlayerManager.p_Object.transform.position;
 
@@ -405,7 +402,7 @@ public class Action : MonoBehaviour
 		if (nearEnemy == null)
 			return;
 		else
-			StartCoroutine(TrackingSpirit(SupSpeed_Spirit, nearEnemy, 2f, 15f, SkillList.SUPPORT_SPD));
+			StartCoroutine(TrackingSpirit(SupSpeed_Spirit, nearEnemy, 2f, 15f, SkillList.SupportSpd));
 
 	}
 	#endregion
@@ -414,7 +411,7 @@ public class Action : MonoBehaviour
 	public void AttackDamage()
 	{
 		GameObject nearEnemy = null;
-		GameObject AtkDis_Spirit = Instantiate(Spirit_Prefab);
+		GameObject AtkDis_Spirit = Instantiate(SpiritPrefab);
 		//정령을 플레이어 위치에 이동
 		AtkDis_Spirit.transform.position = PlayerManager.p_Object.transform.position;
 
@@ -424,14 +421,14 @@ public class Action : MonoBehaviour
 		if (nearEnemy == null)
 			return;
 		else
-			StartCoroutine(TrackingSpirit(AtkDis_Spirit, nearEnemy, 0.1f, 5f, SkillList.ATTACK_DMG));
+			StartCoroutine(TrackingSpirit(AtkDis_Spirit, nearEnemy, 0.1f, 5f, SkillList.AttackDmg));
 
 	}
 
 	public void AttackDistance()
 	{
 		GameObject nearEnemy = null;
-		GameObject AtkDmg_Spirit = Instantiate(Spirit_Prefab);
+		GameObject AtkDmg_Spirit = Instantiate(SpiritPrefab);
 		//정령을 플레이어 위치에 이동
 		AtkDmg_Spirit.transform.position = PlayerManager.p_Object.transform.position;
 
@@ -449,7 +446,7 @@ public class Action : MonoBehaviour
 			direction.y = 0;
 			direction *= 6f;
 
-			StartCoroutine(TrackingSpirit(AtkDmg_Spirit, nearEnemy, 2.2f, 5f, SkillList.ATTACK_DIS));
+			StartCoroutine(TrackingSpirit(AtkDmg_Spirit, nearEnemy, 2.2f, 5f, SkillList.AttackDis));
 		}
 
 	}
@@ -458,7 +455,7 @@ public class Action : MonoBehaviour
 	public void AttackSpeed()
 	{
 		GameObject nearEnemy = null;
-		GameObject AtkSpeed_Spirit = Instantiate(Spirit_Prefab);
+		GameObject AtkSpeed_Spirit = Instantiate(SpiritPrefab);
 		//정령을 플레이어 위치에 이동
 		AtkSpeed_Spirit.transform.position = PlayerManager.p_Object.transform.position;
 
@@ -470,7 +467,7 @@ public class Action : MonoBehaviour
 		if (nearEnemy == null)
 			return;
 		else
-			StartCoroutine(TrackingSpirit(AtkSpeed_Spirit, nearEnemy, 3.2f, 3, SkillList.ATTACK_SPD));
+			StartCoroutine(TrackingSpirit(AtkSpeed_Spirit, nearEnemy, 3.2f, 3, SkillList.AttackSpd));
 
 	}
 
@@ -479,32 +476,32 @@ public class Action : MonoBehaviour
 	#region DefenseSkill
 	public void DefenseDamage()
 	{
-		GameObject DefDmg_Spirit = Instantiate(Spirit_Prefab);
+		GameObject DefDmg_Spirit = Instantiate(SpiritPrefab);
 
 		//정령을 플레이어 위치에 이동.  -> 나중에 현재있는 타일 중앙에 위치시켜야함(이미 타일중앙에 정령이 있을경우 설치불가)
 		DefDmg_Spirit.transform.position = PlayerManager.p_Object.transform.position;
 
-		StartCoroutine(InstallSprit(DefDmg_Spirit, 1.5f, 3f, SkillList.DEFENSE_DMG));
+		StartCoroutine(InstallSprit(DefDmg_Spirit, 1.5f, 3f, SkillList.DefenseDmg));
 	}
 
 	public void DefenseDistance()
 	{
-		GameObject DefDis_Spirit = Instantiate(Spirit_Prefab);
+		GameObject DefDis_Spirit = Instantiate(SpiritPrefab);
 
 		//정령을 플레이어 위치에 이동.  -> 나중에 현재있는 타일 중앙에 위치시켜야함(이미 타일중앙에 정령이 있을경우 설치불가)
 		DefDis_Spirit.transform.position = PlayerManager.p_Object.transform.position;
 
-		StartCoroutine(InstallSprit(DefDis_Spirit, 3.2f, 5f, SkillList.DEFENSE_DIS));
+		StartCoroutine(InstallSprit(DefDis_Spirit, 3.2f, 5f, SkillList.DefenseDis));
 	}
 
 	public void DefenseSpeed()
 	{
-		GameObject DefSpd_Spirit = Instantiate(Spirit_Prefab);
+		GameObject DefSpd_Spirit = Instantiate(SpiritPrefab);
 
 		//정령을 플레이어 위치에 이동.  -> 나중에 현재있는 타일 중앙에 위치시켜야함(이미 타일중앙에 정령이 있을경우 설치불가)
 		DefSpd_Spirit.transform.position = PlayerManager.p_Object.transform.position;
 
-		StartCoroutine(InstallSprit(DefSpd_Spirit, 2.0f, 5f, SkillList.DEFENSE_SPD));
+		StartCoroutine(InstallSprit(DefSpd_Spirit, 2.0f, 5f, SkillList.DefenseSpd));
 	}
 	#endregion
 
@@ -521,7 +518,7 @@ public class Action : MonoBehaviour
 			Destroy(this.gameObject);
 		}
 
-		skillMgr = new SkillManager();
+		//skillMgr = new SkillManager();
 	}
 
 

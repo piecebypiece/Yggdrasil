@@ -1498,7 +1498,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1384001890}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -5.61}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1971,7 +1971,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1596498930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1998,7 +1998,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1596498929}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.9569235, y: -97.92581, z: -15.428474}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2034,7 +2034,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 328ee6c401640c3409792e296c1d79b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Spirit_Prefab: {fileID: 8714650831079917817, guid: 6baee00fcd7f98c4c90766e948237f86, type: 3}
+  SpiritPrefab: {fileID: 8714650831079917817, guid: 6baee00fcd7f98c4c90766e948237f86, type: 3}
 --- !u!4 &1756517117
 Transform:
   m_ObjectHideFlags: 0
@@ -2107,6 +2107,8 @@ GameObject:
   - component: {fileID: 1902855044}
   - component: {fileID: 1902855043}
   - component: {fileID: 1902855042}
+  - component: {fileID: 1902855046}
+  - component: {fileID: 1902855047}
   m_Layer: 9
   m_Name: Boss
   m_TagString: Untagged
@@ -2184,14 +2186,44 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1902855041}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 7}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+--- !u!114 &1902855046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902855041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b83b897b81bb7c4db35b9b74fdeee45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1902855047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902855041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa67e10618bbcbd4d9767dcba8aa3ada, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1384001890}
+  EnemyPrefebs: {fileID: 8714650831079917817, guid: 6baee00fcd7f98c4c90766e948237f86, type: 3}
+  Laser: {fileID: 6301844994125407060, guid: ad4e189aa332ca644ae51caf9b17002c, type: 3}
+  angleRange: 60
+  distance: 5
+  isCollision: 0
 --- !u!1 &1923830474
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,8 +14,8 @@ public class PlayerManager : MonoBehaviour
 	
 
 	//스킬
-	private Skill skill;
-	private SkillManager skillMgr;
+	private ISkill skill;
+	private SkillManager M_skillMgr;
 
 
 	public Text SkillType_txt;
@@ -63,7 +63,7 @@ public class PlayerManager : MonoBehaviour
 
 
 			//1차점검에서 통과되면 스킬발동
-			if(skillMgr.SkillCheck())
+			if(M_skillMgr.SkillCheck())
 			{
 				skill.SkillAction(AbilityType.Damage);
 				Debug.Log("1");
@@ -74,7 +74,7 @@ public class PlayerManager : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.Alpha2))
 		{
 			//스킬을 사용할수 있는지 1차 점검(마나,쿨타임 등 체크)
-			if (skillMgr.SkillCheck())
+			if (M_skillMgr.SkillCheck())
 			{
 				skill.SkillAction(AbilityType.Distance);
 				Debug.Log("2");
@@ -85,7 +85,7 @@ public class PlayerManager : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.Alpha3))
 		{
 			//스킬을 사용할수 있는지 1차 점검(마나,쿨타임 등 체크)
-			if (skillMgr.SkillCheck())
+			if (M_skillMgr.SkillCheck())
 			{
 				skill.SkillAction(AbilityType.Speed);
 				Debug.Log("3");
@@ -116,11 +116,11 @@ public class PlayerManager : MonoBehaviour
 		
 
 		//캐릭터 초기셋팅
-		p_Status.MoveSpeed = 7f; //기본스피드
+		p_Status.MoveSpeed = 8f; //기본스피드
 
 		skillType_num = 0;
 		skill = SkillFactory.SkillTypeSet(SkillType.Attack);
-		skillMgr = new SkillManager();
+		M_skillMgr = new SkillManager();
 
 	}
 

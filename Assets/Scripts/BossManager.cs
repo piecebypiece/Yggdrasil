@@ -29,7 +29,12 @@ namespace Yggdrasil
             TableExcel = GetStatData(_index);
         }
 
-        void Start()
+		public BossStat_TableExcel GetTableExcel()
+		{
+			return TableExcel;
+		}
+
+		void Start()
         {
             var obj = new BossManager(21001);
 
