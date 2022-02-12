@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 using DG.Tweening;
 
 
@@ -357,14 +356,14 @@ public class BossSkill : MonoBehaviour
 
 	}
 
-
+#if UNITY_EDITOR
 	//¾Àºä¿¡¼­ È®ÀÎ¿ë
 	private void OnDrawGizmos()
 	{
-		Handles.color = isCollision ? _red : _blue;
-		Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, angleRange / 2, distance);
-		Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, -angleRange / 2, distance);
+		UnityEditor.Handles.color = isCollision ? _red : _blue;
+		UnityEditor.Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, angleRange / 2, distance);
+		UnityEditor.Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, -angleRange / 2, distance);
 	}
-
+#endif
 
 }
