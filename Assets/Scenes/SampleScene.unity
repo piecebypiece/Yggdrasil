@@ -623,6 +623,7 @@ MonoBehaviour:
   m_DataTableList:
   - {fileID: 11400000, guid: c86f8a36e28210d4a9622aba43a3f87d, type: 2}
   - {fileID: 11400000, guid: 847834a6faba6b041bdcc49020782f01, type: 2}
+  - {fileID: 11400000, guid: 82a97c69f91ce8f4599fc2e90dd8ef8f, type: 2}
 --- !u!4 &375676055
 Transform:
   m_ObjectHideFlags: 0

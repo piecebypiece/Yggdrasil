@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cafd6fad3231e947b546883c7769270, type: 3}
+  m_Name: Soul_TableLoader
+  m_EditorClassIdentifier: 
+  filepath: D:\git\Yggdrasil\Assets\00.Data\Txt\Soul_Table.txt
+  DataList:
+  - No: 1
+    Name_KR: "\uC124\uCE58\uD615 \uC815\uB839"
+    Name_EN: Fix_Soul
+    Code: 0
+    Soul_Class: 1
+    Atk: 100
+    Atk_Speed: 1
+    Move_Speed: 1
+    HP: 500
+    Def: 10
+    Crit_rate: 0.2
+    Crit_Dmg: 1.5
+    Duration: 30
+    CoolTime: 40
+    Skill1Code: 0
+    Skill2Code: 0
+  - No: 2
+    Name_KR: "\uC18C\uD658\uD615 \uC815\uB839"
+    Name_EN: Summon_Soul
+    Code: 0
+    Soul_Class: 2
+    Atk: 120
+    Atk_Speed: 1
+    Move_Speed: 1
+    HP: 500
+    Def: 10
+    Crit_rate: 0.2
+    Crit_Dmg: 1.5
+    Duration: 30
+    CoolTime: 40
+    Skill1Code: 0
+    Skill2Code: 0

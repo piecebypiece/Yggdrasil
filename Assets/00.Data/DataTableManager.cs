@@ -9,6 +9,7 @@ public enum E_DataTableType
     None = -1,
     BossStat,
     CharStat,
+    SoulStat,
     Max
 }
 //해야할것 : 싱글톤 구현해서 매니저를 싱글톤으로 생성시키기.

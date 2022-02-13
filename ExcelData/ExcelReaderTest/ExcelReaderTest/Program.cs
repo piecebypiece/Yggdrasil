@@ -27,8 +27,8 @@ namespace make_excel
 			*/
 			#endregion
 
-			string filename = "CharStat.xlsx";
-			string sheetname = "CharStat_Table";
+			string filename = "PYG_DateTable_정령 능력치.xlsx";
+			string sheetname = "Soul_Table";
 			if (!filepath.EndsWith("\\"))
 				filepath+="\\";
 			ExcelReader excel = new ExcelReader();

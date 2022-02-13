@@ -12,6 +12,7 @@ namespace Singleton_Ver1
     public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
         [SerializeField]
+
         protected bool flag;
         private static T instance;
         public static T Instance
