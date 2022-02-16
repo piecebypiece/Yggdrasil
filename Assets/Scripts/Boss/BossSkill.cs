@@ -30,13 +30,19 @@ public partial class EMath
 public class BossSkill : MonoBehaviour
 {
 	public GameObject target;
-	public GameObject EnemyPrefebs;
-	public GameObject Laser;
+	public GameObject[] EnemyPrefebs = new GameObject[2];
+	public GameObject Laser_Effect;
+	public GameObject Lightning_Effect;
+	public GameObject Thunderbolt_Effect;
+
+	private Animator boss_anim;
 
 	public float angleRange = 60f;
 	public float distance = 5f;
 	public bool isCollision = false;
 
+	private float checkTime = 0f;
+	private bool checkSkill = false;
 
 	Color _blue = new Color(0f, 0f, 1f, 0.2f);
 	Color _red = new Color(1f, 0f, 0f, 0.2f);
@@ -52,6 +58,8 @@ public class BossSkill : MonoBehaviour
 	{
 
 		Debug.Log("2");
+		boss_anim.SetInteger("IdleToSkill", 4);
+		checkSkill = true;
 
 		dotValue = Mathf.Cos(Mathf.Deg2Rad * (angleRange / 2));
 		direction = target.transform.position - transform.position;
@@ -71,13 +79,15 @@ public class BossSkill : MonoBehaviour
 	{
 		Debug.Log("3");
 
+		boss_anim.SetInteger("IdleToSkill", 1);
+		checkSkill = true;
 		////지정범위내의 모든 플레이어를 찾은 후
 		Collider[] colls = Physics.OverlapSphere(transform.position, 15f, 1 << 8);  //8번째 레이어 = Player
 
 		//플레이어가 있을경우
 		if (colls.Length != 0)
 		{
-			GameObject lightning = Instantiate(EnemyPrefebs);
+			GameObject lightning = Instantiate(Lightning_Effect);
 			int rand = Random.Range(0, colls.Length);
 			Vector3 targetPos = colls[rand].gameObject.transform.position;
 
@@ -102,7 +112,8 @@ public class BossSkill : MonoBehaviour
 	public void Thumderbolt()
 	{
 		Debug.Log("4");
-
+		boss_anim.SetInteger("IdleToSkill", 3);
+		checkSkill = true;
 		StartCoroutine(ThumderboltAction(5.0f, transform.position.x, transform.position.z));
 
 	}
@@ -110,8 +121,10 @@ public class BossSkill : MonoBehaviour
 	public void LaserFire()
 	{
 		Debug.Log("5");
+		boss_anim.SetInteger("IdleToSkill", 2);
+		checkSkill = true;
 
-		GameObject laser = Instantiate(Laser);
+		GameObject laser = Instantiate(Laser_Effect);
 		laser.transform.position = transform.position;
 
 		laser.transform.LookAt(target.transform);
@@ -125,6 +138,8 @@ public class BossSkill : MonoBehaviour
 	public void SpeedDown()
 	{
 		Debug.Log("6");
+		boss_anim.SetInteger("IdleToSkill", 1);
+		checkSkill = true;
 
 		//지정범위내의 모든 플레이어를 찾은 후
 		Collider[] colls = Physics.OverlapSphere(transform.position, 5f, 1 << 8);  //8번째 레이어 = Player
@@ -142,7 +157,8 @@ public class BossSkill : MonoBehaviour
 	{
 
 		Debug.Log("7");
-		
+		boss_anim.SetInteger("IdleToSkill", 3);
+		checkSkill = true;
 
 		StartCoroutine(MonsterSummonAction(10,transform.position.x,transform.position.z));
 	}
@@ -180,7 +196,7 @@ public class BossSkill : MonoBehaviour
 
 		for(int i=0; i< bolt.Length; i++)
 		{
-			bolt[i] = Instantiate(EnemyPrefebs);
+			bolt[i] = Instantiate(Thunderbolt_Effect);
 
 			float randX = Random.Range(bossX - 10f, bossX + 10f);
 			float randZ = Random.Range(bossZ - 10f, bossZ + 10f);
@@ -302,7 +318,13 @@ public class BossSkill : MonoBehaviour
 		{
 			float randX = Random.Range(bossX - 5f, bossX + 5f);
 			float randZ = Random.Range(bossZ - 5f, bossZ + 5f);
-			monsters[i] = Instantiate(EnemyPrefebs);
+			
+			if(i>4)
+				monsters[i] = Instantiate(EnemyPrefebs[0]);
+			else
+				monsters[i] = Instantiate(EnemyPrefebs[1]);
+
+
 			monsters[i].transform.position = new Vector3(randX, 0, randZ);
 		}
 
@@ -312,8 +334,8 @@ public class BossSkill : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
-		
-		
+
+		boss_anim = transform.GetChild(0).GetComponent<Animator>();
 
 	}
 
@@ -353,6 +375,17 @@ public class BossSkill : MonoBehaviour
 			MonsterSummon();
 
 
+
+		if(checkSkill)
+		{
+			checkTime += Time.deltaTime;
+			if(checkTime > 1.2f)
+			{
+				checkSkill = false;
+				checkTime = 0f;
+				boss_anim.SetInteger("IdleToSkill", 0);
+			}
+		}
 
 	}
 

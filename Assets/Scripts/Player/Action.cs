@@ -263,11 +263,10 @@ public class Action : MonoBehaviour
 							Debug.Log($"{colls[randvalue].name}에게 대미지를 줍니다");
 
 						}
-
+						DestroyObject(spirit);
 						yield break;
 
 					}
-					break;
 				case SkillList.AttackDis:
 					{
 						attack_time += Time.deltaTime;
