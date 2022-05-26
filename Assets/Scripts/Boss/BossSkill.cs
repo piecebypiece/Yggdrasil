@@ -73,6 +73,8 @@ public class BossSkill : MonoBehaviour
 				StartCoroutine(PullAction(target, transform.position,0.5f));
 			}
 		}
+
+		
 	}
 
 	public void Lightning()

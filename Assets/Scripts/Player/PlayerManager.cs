@@ -11,6 +11,7 @@ public class PlayerManager : MonoBehaviour
 
 	//Ω∫≈»
 	public Yggdrasil.CharacterStats p_Status;
+
 	
 
 	//Ω∫≈≥

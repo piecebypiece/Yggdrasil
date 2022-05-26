@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "ExcelReaderTest/1.0.0": {
+        "runtime": {
+          "ExcelReaderTest.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ExcelReaderTest/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

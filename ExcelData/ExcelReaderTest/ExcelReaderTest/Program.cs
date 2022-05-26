@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
 using Microsoft.Office.Interop.Excel;
 using Excel = Microsoft.Office.Interop.Excel;
@@ -11,8 +10,9 @@ namespace make_excel
 	{
 		static void Main(string[] arg)
 		{
+
 			string filepath =
-				@"D:\git\Yggdrasil\ExcelData\Data_Table";
+				@"D:\GitSources\Yggdrasil\ExcelData\Data_Table";
 
 			#region 복사를 위한 테이블 명
 			/*
@@ -27,8 +27,9 @@ namespace make_excel
 			*/
 			#endregion
 
-			string filename = "PYG_DateTable_정령 능력치.xlsx";
-			string sheetname = "Soul_Table";
+			string filename = "BossSkill.xlsx";
+			string sheetname = "BossStat_Table";
+
 			if (!filepath.EndsWith("\\"))
 				filepath+="\\";
 			ExcelReader excel = new ExcelReader();
