@@ -59,7 +59,7 @@ public class Soul_TableExcelLoader :ScriptableObject
 
 		return data;
 	}
-	[ContextMenu("파일 읽기")]
+	[ContextMenu("?�일 ?�기")]
 	public void ReadAllFile()
 	{
 		DataList=new List<Soul_TableExcel>();

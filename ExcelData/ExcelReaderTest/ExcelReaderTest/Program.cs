@@ -38,6 +38,8 @@ namespace make_excel
 			excel._Finalize();
 		}
 	}
+
+
 	class ExcelReader
 	{
 		public struct Pos
@@ -126,6 +128,7 @@ namespace make_excel
 				GC.Collect();
 			}
 		}
+
 		public void ReadSheet(string sheetName)
 		{   //원하는 시트 정보 불러오기
 			Excel.Worksheet sheet = m_workbook.Worksheets.get_Item(sheetName);
@@ -155,6 +158,7 @@ namespace make_excel
 			DeleteObj(vPagebreak_end);
 			
 		}
+
 		void WriteFile(Excel.Worksheet sheet,int left,int right,int top,int bottom)
 		{
 			int idx = filepath.LastIndexOf("\\");
@@ -306,6 +310,7 @@ namespace make_excel
 			
 
 		}
+
 		void CreateFile(string path)
 		{
 			if(!System.IO.File.Exists(path))
@@ -315,6 +320,7 @@ namespace make_excel
 			}
 
 		}
+
 		void SaveFile(string path,string text)
 		{
 			System.IO.File.WriteAllText(path, text);
