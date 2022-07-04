@@ -55,6 +55,8 @@ public class BossStat_TableExcelLoader : ScriptableObject
 
 		return data;
 	}
+
+
 	[ContextMenu("파일 읽기")]
 	public void ReadAllFile()
 	{
