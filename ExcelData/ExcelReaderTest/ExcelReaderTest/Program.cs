@@ -6,11 +6,13 @@ using Excel = Microsoft.Office.Interop.Excel;
 
 namespace make_excel
 {
+
 	class Program
 	{
 		static void Main(string[] arg)
 		{
 
+			// 파일 임포트시 파일경로를 알아온다.
 			string filepath =
 				@"D:\GitSources\Yggdrasil\ExcelData\Data_Table";
 
@@ -27,17 +29,37 @@ namespace make_excel
 			*/
 			#endregion
 
+			// 경로를 알면 파일이름을 가져올수 있을듯?  
 			string filename = "BossSkill.xlsx";
+
+
+
+
+			//Excel.Application ExcelObj = new Excel.Application();
+			//Excel.Workbook theWorkbook = null;
+			//string strPath = "MENTION PATH OF EXCEL FILE HERE";
+			//theWorkbook = ExcelObj.Workbooks.Open(strPath, missing, missing, missing, missing, missing, missing, missing, missing, missing, missing, missing, missing, missing, missing);
+			//Excel.Sheets sheets = theWorkbook.Worksheets;
+			//Excel.Worksheet worksheet = (Excel.Worksheet)sheets.get_Item(1);//Get the reference of second worksheet
+			//string strWorksheetName = worksheet.Name;//Get the name of worksheet.
+
+			// 시트 이름 가져오는거 api로 구현되어있음.
 			string sheetname = "BossStat_Table";
 
 			if (!filepath.EndsWith("\\"))
 				filepath+="\\";
+
+
+
+			//ExcelReader를 만드는 부분.
 			ExcelReader excel = new ExcelReader();
 			excel._Initialize(filepath + filename);
 			excel.ReadSheet(sheetname);
 			excel._Finalize();
 		}
 	}
+
+
 	class ExcelReader
 	{
 		public struct Pos
@@ -50,18 +72,23 @@ namespace make_excel
 				col = c;
 			}
 		}
+
 		Application m_app = null;
 		Workbook m_workbook = null;
 		string filepath;
 		bool IsFinalized = false;
+
 		public ExcelReader()
 		{ 
 		}
+
 		~ExcelReader()
 		{
 			if (!IsFinalized)
 				_Finalize();
 		}
+
+
 		public bool _Initialize(string path)
 		{
 			m_app = new Application();
@@ -70,6 +97,9 @@ namespace make_excel
 			filepath = path;
 			return true;
 		}
+
+
+
 		public void _Finalize()
 		{
 			IsFinalized = true;
@@ -126,6 +156,7 @@ namespace make_excel
 				GC.Collect();
 			}
 		}
+
 		public void ReadSheet(string sheetName)
 		{   //원하는 시트 정보 불러오기
 			Excel.Worksheet sheet = m_workbook.Worksheets.get_Item(sheetName);
@@ -155,9 +186,10 @@ namespace make_excel
 			DeleteObj(vPagebreak_end);
 			
 		}
+
 		void WriteFile(Excel.Worksheet sheet,int left,int right,int top,int bottom)
 		{
-			int idx = filepath.LastIndexOf("\\");
+			int idx = filepath.LastIndexOf("\\");      //아까 위에서 +=\\ 해줬기 때문에 해당 파일은 
 			string sheetName = sheet.Name;
 			string structName = sheetName + "Excel";
 			string savepath_cs = System.IO.Path.Combine(filepath.Substring(0, idx), structName + "Loader" + ".cs");
@@ -306,6 +338,7 @@ namespace make_excel
 			
 
 		}
+
 		void CreateFile(string path)
 		{
 			if(!System.IO.File.Exists(path))
@@ -315,6 +348,7 @@ namespace make_excel
 			}
 
 		}
+
 		void SaveFile(string path,string text)
 		{
 			System.IO.File.WriteAllText(path, text);

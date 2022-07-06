@@ -29,6 +29,9 @@ public partial class EMath
 
 public class BossSkill : MonoBehaviour
 {
+
+	
+
 	public GameObject target;
 	public GameObject[] EnemyPrefebs = new GameObject[2];
 	public GameObject Laser_Effect;
@@ -56,6 +59,8 @@ public class BossSkill : MonoBehaviour
 
 	public void Pull()
 	{
+
+		
 
 		Debug.Log("2");
 		boss_anim.SetInteger("IdleToSkill", 4);

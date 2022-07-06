@@ -123,6 +123,22 @@ public class PlayerManager : MonoBehaviour
 		skill = SkillFactory.SkillTypeSet(SkillType.Attack);
 		M_skillMgr = new SkillManager();
 
+
+	
+
+		for(int i=0;i< MainManager.Instance.GetStageManager().m_info.Count;i++)
+		{
+			foreach (var element in MainManager.Instance.GetStageManager().m_info[i+1].DataList)
+			{
+				Debug.Log(element.Name_KR);
+			}
+		}
+
+		
+
+
+		//MainManager.Instance.GetStageManager().m_info[0].DataList
+
 	}
 
     // Update is called once per frame
@@ -134,5 +150,7 @@ public class PlayerManager : MonoBehaviour
 		//키보드 입력 체크 함수.
 		InputCheck();
 
+
+		
 	}
 }

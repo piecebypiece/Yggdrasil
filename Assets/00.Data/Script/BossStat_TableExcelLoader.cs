@@ -25,7 +25,7 @@ public struct BossStat_TableExcel
 /*====================================*/
 
 [CreateAssetMenu(fileName="BossStat_TableLoader", menuName= "Scriptable Object/BossStat_TableLoader")]
-public class BossStat_TableExcelLoader :ScriptableObject
+public class BossStat_TableExcelLoader : ScriptableObject
 {
 	[SerializeField] string filepath;
 	public List<BossStat_TableExcel> DataList;
@@ -55,7 +55,9 @@ public class BossStat_TableExcelLoader :ScriptableObject
 
 		return data;
 	}
-	[ContextMenu("?뚯씪 ?쎄린")]
+
+
+	[ContextMenu("파일 읽기")]
 	public void ReadAllFile()
 	{
 		DataList=new List<BossStat_TableExcel>();
