@@ -8,13 +8,13 @@ namespace Yggdrasil
     public class BossManager : MonoBehaviour
     {
         [SerializeField]
-        private int index; // °¢ º¸½º°¡ °¡Áö°í ÀÖ´Â ÀÎµ¦½º¹øÈ£
+        private int index; // ê° ë³´ìŠ¤ê°€ ê°€ì§€ê³  ìˆëŠ” ì¸ë±ìŠ¤ë²ˆí˜¸
 
         private BossStat_TableExcel TableExcel;
         DataTableManager M_DataTable => DataTableManager.Instance;
 
-        #region Boss½ºÅÈ Á¤º¸ °¡Á®¿À±â
-        // BossIndex¿¡ ÇØ´çµÇ´Â º¸½º TableExcelÀ» °¡Á®¿Â´Ù.
+        #region BossìŠ¤íƒ¯ ì •ë³´ ê°€ì ¸ì˜¤ê¸°
+        // BossIndexì— í•´ë‹¹ë˜ëŠ” ë³´ìŠ¤ TableExcelì„ ê°€ì ¸ì˜¨ë‹¤.
 
         public BossStat_TableExcel GetStatData(int _index)
         {
