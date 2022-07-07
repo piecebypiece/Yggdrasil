@@ -10,35 +10,35 @@ namespace Yggdrasil
         [SerializeField]
         private int index; // 각 보스가 가지고 있는 인덱스번호
 
-        private BossStat_TableExcel TableExcel;
+       // private BossStat_TableExcel TableExcel;
         DataTableManager M_DataTable => DataTableManager.Instance;
 
         #region Boss스탯 정보 가져오기
         // BossIndex에 해당되는 보스 TableExcel을 가져온다.
 
-        public BossStat_TableExcel GetStatData(int _index)
-        {
-            BossStat_TableExcelLoader m_BossStat = M_DataTable.GetDataTable<BossStat_TableExcelLoader>();
-            BossStat_TableExcel statData = m_BossStat.DataList.Where(item => item.BossIndex == _index).SingleOrDefault();
-            return statData;
-        }
+        //public BossStat_TableExcel GetStatData(int _index)
+        //{
+        //    BossStat_TableExcelLoader m_BossStat = M_DataTable.GetDataTable<BossStat_TableExcelLoader>();
+        //    BossStat_TableExcel statData = m_BossStat.DataList.Where(item => item.BossIndex == _index).SingleOrDefault();
+        //    return statData;
+        //}
         #endregion
 
-        public BossManager(int _index)
-        {
-            TableExcel = GetStatData(_index);
-        }
+  //      public BossManager(int _index)
+  //      {
+  //          TableExcel = GetStatData(_index);
+  //      }
 
-		public BossStat_TableExcel GetTableExcel()
-		{
-			return TableExcel;
-		}
+		//public BossStat_TableExcel GetTableExcel()
+		//{
+		//	return TableExcel;
+		//}
 
-		void Start()
-        {
-            var obj = new BossManager(21001);
+		//void Start()
+  //      {
+  //          var obj = new BossManager(21001);
 
-            Debug.Log($"{obj.TableExcel.Name_KR}");
-        }
+  //          Debug.Log($"{obj.TableExcel.Name_KR}");
+  //      }
     }
 }

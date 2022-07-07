@@ -9,12 +9,12 @@ public class MainManager : MonoBehaviour
 	public static MainManager instance;
 
 
-	[Header("¸Ê µ¥ÀÌÅÍ")]
-	public BossStat_TableExcelLoader m_data1;
-	public CharStat_TableExcelLoader m_data2;
-	public Soul_TableExcelLoader m_data3;
+	//[Header("ç­Œ??æ€¨ì€¬ëµ ??)]
+	//public BossStat_TableExcelLoader m_data1;
+	//public BossStat_TableExcelLoader m_data2;
+	//public BossStat_TableExcelLoader m_data3;
 
-	//¸Å´ÏÀú
+	//ç­Œë²ë‡???
 	private UIManager m_UIManager;
 	private StageManager m_StageManager;
 
@@ -28,10 +28,10 @@ public class MainManager : MonoBehaviour
 		{
 			instance = this;
 
-			//¸Å´ÏÀú ¼ÂÆÃºÎºĞ
+			//ç­Œë²ë‡??? ???ìƒ’?ë´”Â€??
 			m_UIManager = new UIManager();
 			m_StageManager = new StageManager();
-			m_StageManager.SetMapInfo(m_data1, m_data1, m_data1);
+			//m_StageManager.SetMapInfo(m_data1, m_data1, m_data1);
 
 
 			DontDestroyOnLoad(this.gameObject);
@@ -72,9 +72,8 @@ public class MainManager : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
-		
 
-	}
+    }
 
     // Update is called once per frame
     void Update()

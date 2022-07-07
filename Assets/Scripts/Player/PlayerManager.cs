@@ -6,22 +6,22 @@ using Yggdrasil.PlayerSkillSet;
 
 public class PlayerManager : MonoBehaviour
 {
-	//ÇÃ·¹ÀÌ¾î ¿ÀºêÁ§Æ®
+	//í”Œë ˆì´ì–´ ì˜¤ë¸Œì íŠ¸
 	public static GameObject p_Object;
 
-	//½ºÅÈ
+	//ìŠ¤íƒ¯
 	public Yggdrasil.CharacterStats p_Status;
 
 	
 
-	//½ºÅ³
+	//ìŠ¤í‚¬
 	private ISkill skill;
 	private SkillManager M_skillMgr;
 
 
 	public Text SkillType_txt;
 	private int skillType_num;
-	// ÀÌº¥Æ® °ü·Ã
+	// ì´ë²¤íŠ¸ ê´€ë ¨
 	//private TempCodes.TempMessageSystem eSystem;
 	//private MoveEvent me;
 	//private Handler player;
@@ -60,10 +60,10 @@ public class PlayerManager : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.Alpha1))
 		{
-			//½ºÅ³À» »ç¿ëÇÒ¼ö ÀÖ´ÂÁö 1Â÷ Á¡°Ë(¸¶³ª,ÄğÅ¸ÀÓ µî Ã¼Å©)
+			//ìŠ¤í‚¬ì„ ì‚¬ìš©í• ìˆ˜ ìˆëŠ”ì§€ 1ì°¨ ì ê²€(ë§ˆë‚˜,ì¿¨íƒ€ì„ ë“± ì²´í¬)
 
 
-			//1Â÷Á¡°Ë¿¡¼­ Åë°úµÇ¸é ½ºÅ³¹ßµ¿
+			//1ì°¨ì ê²€ì—ì„œ í†µê³¼ë˜ë©´ ìŠ¤í‚¬ë°œë™
 			if(M_skillMgr.SkillCheck())
 			{
 				skill.SkillAction(AbilityType.Damage);
@@ -74,7 +74,7 @@ public class PlayerManager : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.Alpha2))
 		{
-			//½ºÅ³À» »ç¿ëÇÒ¼ö ÀÖ´ÂÁö 1Â÷ Á¡°Ë(¸¶³ª,ÄğÅ¸ÀÓ µî Ã¼Å©)
+			//ìŠ¤í‚¬ì„ ì‚¬ìš©í• ìˆ˜ ìˆëŠ”ì§€ 1ì°¨ ì ê²€(ë§ˆë‚˜,ì¿¨íƒ€ì„ ë“± ì²´í¬)
 			if (M_skillMgr.SkillCheck())
 			{
 				skill.SkillAction(AbilityType.Distance);
@@ -85,7 +85,7 @@ public class PlayerManager : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.Alpha3))
 		{
-			//½ºÅ³À» »ç¿ëÇÒ¼ö ÀÖ´ÂÁö 1Â÷ Á¡°Ë(¸¶³ª,ÄğÅ¸ÀÓ µî Ã¼Å©)
+			//ìŠ¤í‚¬ì„ ì‚¬ìš©í• ìˆ˜ ìˆëŠ”ì§€ 1ì°¨ ì ê²€(ë§ˆë‚˜,ì¿¨íƒ€ì„ ë“± ì²´í¬)
 			if (M_skillMgr.SkillCheck())
 			{
 				skill.SkillAction(AbilityType.Speed);
@@ -116,8 +116,8 @@ public class PlayerManager : MonoBehaviour
 
 		
 
-		//Ä³¸¯ÅÍ ÃÊ±â¼ÂÆÃ
-		p_Status.MoveSpeed = 8f; //±âº»½ºÇÇµå
+		//ìºë¦­í„° ì´ˆê¸°ì…‹íŒ…
+		p_Status.MoveSpeed = 8f; //ê¸°ë³¸ìŠ¤í”¼ë“œ
 
 		skillType_num = 0;
 		skill = SkillFactory.SkillTypeSet(SkillType.Attack);
@@ -126,17 +126,16 @@ public class PlayerManager : MonoBehaviour
 
 	
 
-		for(int i=0;i< MainManager.Instance.GetStageManager().m_info.Count;i++)
-		{
-			foreach (var element in MainManager.Instance.GetStageManager().m_info[i+1].DataList)
-			{
-				Debug.Log(element.Name_KR);
-			}
-		}
+		//for(int i=0;i< MainManager.Instance.GetStageManager().m_info.Count;i++)
+		//{
+		//	foreach (var element in MainManager.Instance.GetStageManager().m_info[i+1].DataList)
+		//	{
+		//		Debug.Log(element.Name_KR);
+		//	}
+		//}
+
 
 		
-
-
 		//MainManager.Instance.GetStageManager().m_info[0].DataList
 
 	}
@@ -144,10 +143,10 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		//ÀÌµ¿
+		//ì´ë™
 		Move();
 
-		//Å°º¸µå ÀÔ·Â Ã¼Å© ÇÔ¼ö.
+		//í‚¤ë³´ë“œ ì…ë ¥ ì²´í¬ í•¨ìˆ˜.
 		InputCheck();
 
 

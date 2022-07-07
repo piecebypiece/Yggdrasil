@@ -12,14 +12,7 @@ public class UpdateData : AssetPostprocessor
 
 	void OnPreprocessAsset()
 	{
-		// µ¥ÀÌÅÍ ÆÄ½ÌÇØ¼­ ¾÷µ¥ÀÌÆ® ÇÏ´Â ºÎºĞ.
-
-		// dll ·Î ¸¸µçÈÄ 00.Data¿¡ ¿¢¼¿Æú´õ¸¦ ¸¸µé°í ±× Æú´õ¾È¿¡ ¿¢¼¿µ¥ÀÌÅÍ°¡ Áı¾î³Ö¾îÁö¸é(ÆÄÀÏ±¸ºĞ ÇÊ¼ö = EX )¿¢¼¿ÆÄÀÏÀÌ ¸Â´ÂÁö) dll¸¦ ½ÇÇàÇØ csÆú´õ¿Í txtÆú´õ¾È¿¡
-		// ¸¸µé¾î Áöµµ·Ï ¸¸¾à ÇØ´ç Æú´õ°¡ ¾ø´Ù¸é ÇöÀç µğ·ºÅä¸®¿¡ ¸¸µé¾îÁöµµ·Ï.
-
-		// ÀÌ¹Ì ÀÖ´ø ½ºÅ©¸³ÅÍºí ¿ÀºêÁ§Æ®°¡ ÀÖÀ»°æ¿ì ¾÷µ¥ÀÌÆ® ÇÒ ¼ö ÀÖµµ·Ï...
-
-
+	
 		DirectoryInfo di = new DirectoryInfo(Path.GetDirectoryName(assetImporter.assetPath));
 		DirectoryInfo[] diarr = di.GetDirectories();
 
@@ -30,46 +23,63 @@ public class UpdateData : AssetPostprocessor
 
 			if (f_name == "txt")
 			{
-				Debug.Log("txtÆú´õ ÀÖÀ½");
+				Debug.Log("txt í´ë” ìˆìŒ");
 			}
 			else if(f_name == "script")
 			{
-				Debug.Log("scriptÆú´õ ÀÖÀ½");
+				Debug.Log("script í´ë” ìˆìŒ");
 			}
 		}
 
+        
 
-
-		if (assetImporter.assetPath.Contains("Assets/00.Data/Excel"))
+        if (assetImporter.assetPath.Contains("Assets/00.Data/Excel"))
 		{
 
-			string a = Application.dataPath.Replace("/", @"\");
+
+			string a = UnityEngine.Application.dataPath.Replace("/", @"\");
 			string b = assetImporter.assetPath.Replace("Assets", "");  //
 
-			string f_path = a + b.Replace("/", @"\");            // path°æ·Î ¼³Á¤
+            string exe_path = a + @"\Editor\TestExcelDataReader.exe";
 
-			//int idx = f_path.LastIndexOf("\\");                  // path¿¡¼­ ÆÄÀÏ ÀÌ¸§ À§Ä¡ Ã£±â.
-			//string f_name = f_path.Substring(idx + 1);           // path¿¡¼­ ÆÄÀÏ ÀÌ¸§ ÃßÃâ.
+           
+           
 
-			string f_name = Path.GetFileName(f_path);            // PathÅ¬·¡½º¸¦ »ç¿ëÇØ¼­ ÀÌ¸§ ÃßÃâ
+			string f_path = a + b.Replace("/", @"\");            // íŒ¨ìŠ¤ ê²½ë¡œ
 
-			string f_extension = Path.GetExtension(f_path);      // PathÅ¬·¡½º¸¦ »ç¿ëÇØ¼­ È®ÀåÀÚ ÃßÃâ
+			//int idx = f_path.LastIndexOf("\\");                  // path?ë¨¯ê½Œ ?ëš¯ì”ª ?ëŒ€ì«« ?ê¾©íŠ‚ ï§¡ì–˜ë¦°.
+			//string f_name = f_path.Substring(idx + 1);           // path?ë¨¯ê½Œ ?ëš¯ì”ª ?ëŒ€ì«« ç•°ë¶¿í…§.
 
-			//dll Áı¾î³Ö°í path³Ö¾î¼­ »ç¿ë.
+			string f_name = Path.GetFileName(f_path);            // íŒ¨ìŠ¤ê²½ë¡œì—ì„œ ì´ë¦„ ì¶”ì¶œ
+
+			string f_extension = Path.GetExtension(f_path);      // íŒ¨ìŠ¤ê²½ë¡œì—ì„œ í™•ì¥ì ì¶”ì¶œ
+
 			
+			if(f_extension.Contains(".xlsx"))
+			{
+				Debug.Log("ì—‘ì…€íŒŒì¼ ë“¤ì–´ì˜´.");
 
-			//fileÀÇ È®ÀåÀÚ°¡ ExcelÆÄÀÏÀÎÁö È®ÀÎ.
-			// if(f_extension.Contains(".xlsx"))   { // Tooo  }
+                //ExcelDataParsing3.ExcelReader ER = new ExcelReader();
+                //ER._Initialize(f_path);
+                //ER.ReadSheet();
+                //ER._Finalize();
+                //ER._MakeExcelDataToCSFileAndTXTFile(f_path);
 
-			Debug.Log(f_path);
-			Debug.Log(f_name);
-			Debug.Log(f_extension);
+                System.Diagnostics.Process.Start(exe_path, f_path);
+
+            }
+			else
+			{
+				Debug.Log("ì—‘ì…€íŒŒì¼ ì•„ë‹˜");
+			}
+
+            //Debug.Log(exe_path);
+            //Debug.Log(f_path);
+			//Debug.Log(f_name);
+			//Debug.Log(f_extension);
 		}
 		else
 			return;
-	
-		//³»¿ëÀÌ ¾÷µ¥ÀÌÆ®°¡ µÇ¸é dll(ExcelRoaderTest)À» »ç¿ëÇÏ¿© scriptable object·Î Àû¿ëµÉ ¼ö ÀÖ°Ô²û..(ÀÌ¹Ì ÆÄÀÏÀÌ ÀÖÀ¸¸é ³»¿ë¼öÁ¤ ¾øÀ¸¸é »ı¼ºµÇ´Â½ÄÀ¸·Î)
-
 	}
 
 

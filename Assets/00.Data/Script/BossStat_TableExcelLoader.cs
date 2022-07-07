@@ -8,16 +8,19 @@ public struct BossStat_TableExcel
 	public string Name_KR;
 	public string Name_EN;
 	public int BossIndex;
-	public int Atk;
-	public int HP;
-	public int Def;
-	public int MaxTM;
-	public int Speed;
-	public int MoveRange;
-	public int MoveTMUsed;
+	public float Atk;
+	public float HP;
+	public float Def;
+	public float SRange;
+	public float CRange;
+	public float FRange;
+	public float MaxStamina;
+	public float Speed;
+	public float MoveStUsed;
 	public int Skill1;
 	public int Skill2;
 	public int Skill3;
+	public int Skill4;
 }
 
 
@@ -25,7 +28,7 @@ public struct BossStat_TableExcel
 /*====================================*/
 
 [CreateAssetMenu(fileName="BossStat_TableLoader", menuName= "Scriptable Object/BossStat_TableLoader")]
-public class BossStat_TableExcelLoader : ScriptableObject
+public class BossStat_TableExcelLoader :ScriptableObject
 {
 	[SerializeField] string filepath;
 	public List<BossStat_TableExcel> DataList;
@@ -42,22 +45,23 @@ public class BossStat_TableExcelLoader : ScriptableObject
 		data.Name_KR = strs[idx++];
 		data.Name_EN = strs[idx++];
 		data.BossIndex = int.Parse(strs[idx++]);
-		data.Atk = int.Parse(strs[idx++]);
-		data.HP = int.Parse(strs[idx++]);
-		data.Def = int.Parse(strs[idx++]);
-		data.MaxTM = int.Parse(strs[idx++]);
-		data.Speed = int.Parse(strs[idx++]);
-		data.MoveRange = int.Parse(strs[idx++]);
-		data.MoveTMUsed = int.Parse(strs[idx++]);
+		data.Atk = float.Parse(strs[idx++]);
+		data.HP = float.Parse(strs[idx++]);
+		data.Def = float.Parse(strs[idx++]);
+		data.SRange = float.Parse(strs[idx++]);
+		data.CRange = float.Parse(strs[idx++]);
+		data.FRange = float.Parse(strs[idx++]);
+		data.MaxStamina = float.Parse(strs[idx++]);
+		data.Speed = float.Parse(strs[idx++]);
+		data.MoveStUsed = float.Parse(strs[idx++]);
 		data.Skill1 = int.Parse(strs[idx++]);
 		data.Skill2 = int.Parse(strs[idx++]);
 		data.Skill3 = int.Parse(strs[idx++]);
+		data.Skill4 = int.Parse(strs[idx++]);
 
 		return data;
 	}
-
-
-	[ContextMenu("ÆÄÀÏ ÀĞ±â")]
+	[ContextMenu("íŒŒì¼ ì½ê¸°")]
 	public void ReadAllFile()
 	{
 		DataList=new List<BossStat_TableExcel>();

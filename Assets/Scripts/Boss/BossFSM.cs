@@ -16,25 +16,25 @@ public class BossFSM : MonoBehaviour
 
 	public enum BossState
 	{
-		NOMAL,      //ÀÏ¹Ý(»óÅÂÀÌ»ó¿¡ °É¸®Áö ¾ÊÀº Á¤»ó »óÅÂ),´ë±â(SP¸¦ È¸º¹ÇÏ´Â »óÅÂ)
-		IDLE,       //Çàµ¿ÀÇ ÀüÈ¯À» ±â´Ù¸®´Â ½ÃÁ¡(°ø°Ý,ÀÌµ¿,½ºÅ³)
+		NOMAL,      //ì¼ë°˜(ìƒíƒœì´ìƒì— ê±¸ë¦¬ì§€ ì•Šì€ ì •ìƒ ìƒíƒœ),ëŒ€ê¸°(SPë¥¼ íšŒë³µí•˜ëŠ” ìƒíƒœ)
+		IDLE,       //í–‰ë™ì˜ ì „í™˜ì„ ê¸°ë‹¤ë¦¬ëŠ” ì‹œì (ê³µê²©,ì´ë™,ìŠ¤í‚¬)
 
 
-		//Çàµ¿ÀÇ º¯È­ »óÅÂ
-		BUFF,       //¹öÇÁ ½ºÅ³À» »ç¿ëÇÏ´Â »óÅÂ
-		MOVE,       //ÀÌµ¿
-		BATTLE,     //ÀüÅõ
+		//í–‰ë™ì˜ ë³€í™” ìƒíƒœ
+		BUFF,       //ë²„í”„ ìŠ¤í‚¬ì„ ì‚¬ìš©í•˜ëŠ” ìƒíƒœ
+		MOVE,       //ì´ë™
+		BATTLE,     //ì „íˆ¬
 
 
-		//ÀüÅõ¿¡¼­ÀÇ 
-		DETECTION,   //Å½Áö
-		ATTACK,     //°ø°Ý(½ºÅ³À» »ç¿ëÇÏ´Â »óÅÂ)
-		AGGRO,      //¾î±×·Î
+		//ì „íˆ¬ì—ì„œì˜ 
+		DETECTION,   //íƒì§€
+		ATTACK,     //ê³µê²©(ìŠ¤í‚¬ì„ ì‚¬ìš©í•˜ëŠ” ìƒíƒœ)
+		AGGRO,      //ì–´ê·¸ë¡œ
 		
-		//¿ÜºÎÀÇ »óÅÂ(¾î¶² »óÅÂ¿¡¼­µµ ¹Ù·Î Á¢±ÙÇÒ¼ö ÀÖµµ·Ï)
-		CC,         //»óÅÂÀÌ»ó(±ºÁßÁ¦¾î»óÅÂ)
-		DIE,        //Á×À½
-		HIT         //ÇÇ°Ý
+		//ì™¸ë¶€ì˜ ìƒíƒœ(ì–´ë–¤ ìƒíƒœì—ì„œë„ ë°”ë¡œ ì ‘ê·¼í• ìˆ˜ ìžˆë„ë¡)
+		CC,         //ìƒíƒœì´ìƒ(êµ°ì¤‘ì œì–´ìƒíƒœ)
+		DIE,        //ì£½ìŒ
+		HIT         //í”¼ê²©
 	}
 
 	private BossState bossState;
@@ -42,20 +42,20 @@ public class BossFSM : MonoBehaviour
 
 	void StateNomal()
 	{
-		//º¸½ºÀÇ SP°¡ 100%¶ó¸é ´ÙÀ½ Çàµ¿À» ½ÇÇà.
-		if (M_BossInfo.GetTableExcel().MaxTM >= actionPoint)
-		{
-			//sp°ÔÀÌÁö°¡ ¾ÈÃ¤¿öÁöµµ·Ï.
-			spCheck = true;
+		//ë³´ìŠ¤ì˜ SPê°€ 100%ë¼ë©´ ë‹¤ìŒ í–‰ë™ì„ ì‹¤í–‰.
+		//if (M_BossInfo.GetTableExcel().MaxTM >= actionPoint)
+		//{
+		//	//spê²Œì´ì§€ê°€ ì•ˆì±„ì›Œì§€ë„ë¡.
+		//	spCheck = true;
 
-			bossState = BossState.IDLE;
+		//	bossState = BossState.IDLE;
 
-			Debug.Log("º¸½ºÀÇ SP °ÔÀÌÁö°¡ ´ÙÂ÷¼­ »óÅÂ¸¦ IDLE·Î ÀüÈ¯ÇÕ´Ï´Ù.");
-		}
-		else
-		{
-			//¾Ö´Ï¸ÞÀÌ¼Ç ±âº»¸ð¼Ç ¼ÂÆÃ.
-		}
+		//	Debug.Log("ë³´ìŠ¤ì˜ SP ê²Œì´ì§€ê°€ ë‹¤ì°¨ì„œ ìƒíƒœë¥¼ IDLEë¡œ ì „í™˜í•©ë‹ˆë‹¤.");
+		//}
+		//else
+		//{
+		//	//ì• ë‹ˆë©”ì´ì…˜ ê¸°ë³¸ëª¨ì…˜ ì…‹íŒ….
+		//}
 	}
 
 	void StateIdle()
@@ -66,7 +66,7 @@ public class BossFSM : MonoBehaviour
 		switch (rand)
 		{
 			case 0:
-				if(actionPoint > 100)        //ÀÌµ¿¿¡ ÇÊ¿äÇÑ SP°ÔÀÌÁö°¡ ÀÖÀ»¶§. ¾øÀ¸¸é -> ´Ù½Ã »Ì´Â´Ù.
+				if(actionPoint > 100)        //ì´ë™ì— í•„ìš”í•œ SPê²Œì´ì§€ê°€ ìžˆì„ë•Œ. ì—†ìœ¼ë©´ -> ë‹¤ì‹œ ë½‘ëŠ”ë‹¤.
 					bossState = BossState.BUFF;
 				break;
 			case 1:
@@ -84,11 +84,11 @@ public class BossFSM : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		M_BossInfo = new Yggdrasil.BossManager(21001);
+		//M_BossInfo = new Yggdrasil.BossManager(21001);
 
 		bossState = BossState.NOMAL;
 
-		Debug.Log($"BossFSM: ÇöÀçÀÇ º¸½ºÀÇ ÀÌ¸§Àº \"{M_BossInfo.GetTableExcel().Name_KR}\" ÀÔ´Ï´Ù.");
+		//Debug.Log($"BossFSM: í˜„ìž¬ì˜ ë³´ìŠ¤ì˜ ì´ë¦„ì€ \"{M_BossInfo.GetTableExcel().Name_KR}\" ìž…ë‹ˆë‹¤.");
 	}
 
 	// Update is called once per frame
@@ -96,24 +96,24 @@ public class BossFSM : MonoBehaviour
 	{
 		time += Time.deltaTime;
 
-		if (time > 1.0f && !spCheck)
-		{
-			actionPoint += M_BossInfo.GetTableExcel().Speed;
+		//if (time > 1.0f && !spCheck)
+		//{
+		//	actionPoint += M_BossInfo.GetTableExcel().Speed;
 
-			if (actionPoint > M_BossInfo.GetTableExcel().MaxTM)
-			{
-				int a = actionPoint - M_BossInfo.GetTableExcel().MaxTM;
+		//	if (actionPoint > M_BossInfo.GetTableExcel().MaxTM)
+		//	{
+		//		int a = actionPoint - M_BossInfo.GetTableExcel().MaxTM;
 
-				//MaxTMÀ» ³Ñ±â ¾Ê°Ô.
-				actionPoint -= a;
+		//		//MaxTMì„ ë„˜ê¸° ì•Šê²Œ.
+		//		actionPoint -= a;
 
-			}
-		}
+		//	}
+		//}
 
 		switch (bossState)
 		{
 			case BossState.NOMAL:
-				//ÀÌ »óÅÂ¿¡¼­´Â ¸Â¾Æµµ °¡¸¸È÷ ÀÖÀ½(±×·Î±â? °°Àº»óÅÂ) -> SP¸¦ Ã¤¿ì°í ÀÖ´ÂÁß == ÇÃ·¹ÀÌ¾îÀÇ °ø°ÝÅ¸ÀÌ¹Ö.
+				//ì´ ìƒíƒœì—ì„œëŠ” ë§žì•„ë„ ê°€ë§Œížˆ ìžˆìŒ(ê·¸ë¡œê¸°? ê°™ì€ìƒíƒœ) -> SPë¥¼ ì±„ìš°ê³  ìžˆëŠ”ì¤‘ == í”Œë ˆì´ì–´ì˜ ê³µê²©íƒ€ì´ë°.
 				StateNomal();
 				break;
 			case BossState.CC:
@@ -123,7 +123,7 @@ public class BossFSM : MonoBehaviour
 
 				break;
 			case BossState.IDLE:
-				//SP°¡ ´Ù Ã¤¿öÁ® ÀÖ°Å³ª ³²¾ÆÀÖ´Â »óÅÂ, Çàµ¿ÀÇ º¯È­¸¦ ´ë±âÇÏ´Â »óÅÂ -> ÀÌ¶§ ÇÇ°Ý µÇ¸é ÀüÅõ»óÅÂ·Î ¹Ù·Î µé¾î°£´Ù.  
+				//SPê°€ ë‹¤ ì±„ì›Œì ¸ ìžˆê±°ë‚˜ ë‚¨ì•„ìžˆëŠ” ìƒíƒœ, í–‰ë™ì˜ ë³€í™”ë¥¼ ëŒ€ê¸°í•˜ëŠ” ìƒíƒœ -> ì´ë•Œ í”¼ê²© ë˜ë©´ ì „íˆ¬ìƒíƒœë¡œ ë°”ë¡œ ë“¤ì–´ê°„ë‹¤.  
 				StateIdle();
 				break;
 
@@ -131,14 +131,14 @@ public class BossFSM : MonoBehaviour
 				
 				break;
 			case BossState.BUFF:
-				//º¸½º¿¡°Ô À¯¸®ÇÑ ¹öÇÁ(¹æ¾î·ÂÁõ°¡,Ã¼·ÂÈ¸º¹,°ø°Ý·ÂÁõ°¡µîµî)
+				//ë³´ìŠ¤ì—ê²Œ ìœ ë¦¬í•œ ë²„í”„(ë°©ì–´ë ¥ì¦ê°€,ì²´ë ¥íšŒë³µ,ê³µê²©ë ¥ì¦ê°€ë“±ë“±)
 				break;
 			case BossState.BATTLE:
-				//ÀüÅõ »óÅÂ ->
+				//ì „íˆ¬ ìƒíƒœ ->
 				break;
 
 			case BossState.ATTACK:
-				//ÀüÅõÀÇ °ø°Ý»óÅÂ(±âº» °ø°Ý,½ºÅ³ÄðÅ¸ÀÓ¿¡ ¸ÂÃç ½ºÅ³?)
+				//ì „íˆ¬ì˜ ê³µê²©ìƒíƒœ(ê¸°ë³¸ ê³µê²©,ìŠ¤í‚¬ì¿¨íƒ€ìž„ì— ë§žì¶° ìŠ¤í‚¬?)
 				break;
 			case BossState.AGGRO:
 
@@ -147,7 +147,7 @@ public class BossFSM : MonoBehaviour
 				
 				break;
 			case BossState.DETECTION:
-				//¹èÆ² »óÅÂ¿¡¼­ ÀûÀÌ ÀÖ´ÂÁö Ã£´Â»óÅÂ(?) -> ±»ÀÌ? ¸Þ¼­µå·Î »©¹ö¸®´Â°Ô ¸Â´Â°Í °°Àºµ¥.
+				//ë°°í‹€ ìƒíƒœì—ì„œ ì ì´ ìžˆëŠ”ì§€ ì°¾ëŠ”ìƒíƒœ(?) -> êµ³ì´? ë©”ì„œë“œë¡œ ë¹¼ë²„ë¦¬ëŠ”ê²Œ ë§žëŠ”ê²ƒ ê°™ì€ë°.
 				break;
 		}
 

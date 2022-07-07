@@ -7,23 +7,23 @@ namespace Yggdrasil
 {
     public class CharacterManager : Singleton_Ver1.Singleton<CharacterManager>
     {
-        #region Char½ºÅÈ Á¤º¸ °¡Á®¿À±â
+        #region CharìŠ¤íƒ¯ ì •ë³´ ê°€ì ¸ì˜¤ê¸°
         DataTableManager M_DataTable => DataTableManager.Instance;
         private List<TempCharacter> M_CharacterList = new List<TempCharacter>();
-        private CharStat_TableExcel TableExcel;
+        //private CharStat_TableExcel TableExcel;
 
         public GameObject obj_10001;
         public GameObject obj_10002;
 
-        public CharStat_TableExcel GetStatData(int _index)
-        {
-            CharStat_TableExcelLoader m_CharStat = M_DataTable.GetDataTable<CharStat_TableExcelLoader>();
-            CharStat_TableExcel statData = m_CharStat.DataList.Where(item => item.CharIndex == _index).SingleOrDefault();
-            return statData;
-        }
+        //public CharStat_TableExcel GetStatData(int _index)
+        //{
+        //    CharStat_TableExcelLoader m_CharStat = M_DataTable.GetDataTable<CharStat_TableExcelLoader>();
+        //    CharStat_TableExcel statData = m_CharStat.DataList.Where(item => item.CharIndex == _index).SingleOrDefault();
+        //    return statData;
+        //}
         #endregion
 
-        public void AddCharacter(int _index) // Ä³¸¯ÅÍ Ãß°¡ÇÏ±â
+        public void AddCharacter(int _index) // ìºë¦­í„° ì¶”ê°€í•˜ê¸°
         {
             TempCharacter character = new TempCharacter();
             character.index = _index;

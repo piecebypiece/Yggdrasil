@@ -5,7 +5,7 @@ using UnityEngine;
 public class StageManager : MonoBehaviour
 {
 
-	public Dictionary<int, BossStat_TableExcelLoader> m_info;
+	//public Dictionary<int, BossStat_TableExcelLoader> m_info;
 
 
 
@@ -13,19 +13,19 @@ public class StageManager : MonoBehaviour
 	public StageManager()
 	{
 
-		if(null == m_info)
-		{
-			m_info = new Dictionary<int, BossStat_TableExcelLoader>();
-		}
+		//if(null == m_info)
+		//{
+		//	m_info = new Dictionary<int, BossStat_TableExcelLoader>();
+		//}
 
 	}
 
-	public void SetMapInfo(BossStat_TableExcelLoader m1, BossStat_TableExcelLoader m2, BossStat_TableExcelLoader m3)
-	{
-		m_info.Add(1, m1);
-		m_info.Add(2, m2);
-		m_info.Add(3, m3);
-	}
+	//public void SetMapInfo(BossStat_TableExcelLoader m1, BossStat_TableExcelLoader m2, BossStat_TableExcelLoader m3)
+	//{
+	//	m_info.Add(1, m1);
+	//	m_info.Add(2, m2);
+	//	m_info.Add(3, m3);
+	//}
 
 
 	
@@ -33,7 +33,7 @@ public class StageManager : MonoBehaviour
     void Start()
     {
 
-		//ÀÌ·± ½ÄÀ¸·Î Á¢±ÙÇÒ ¼ö ÀÖÀ½.
+		//ì´ëŸ° ì‹ìœ¼ë¡œ ì ‘ê·¼í•  ìˆ˜ ìˆìŒ.
 		//for (int i = 0; i < MainManager.Instance.GetStageManager().m_info.Count; i++)
 		//{
 		//	foreach (var element in MainManager.Instance.GetStageManager().m_info[i + 1].DataList)
