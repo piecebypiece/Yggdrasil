@@ -30,7 +30,7 @@ public struct BossStat_TableExcel
 [CreateAssetMenu(fileName="BossStat_TableLoader", menuName= "Scriptable Object/BossStat_TableLoader")]
 public class BossStat_TableExcelLoader :ScriptableObject
 {
-	[SerializeField] string filepath;
+	[SerializeField] string filepath =@"Assets\00.Data\txt\BossStat_Table.txt";
 	public List<BossStat_TableExcel> DataList;
 
 	private BossStat_TableExcel Read(string line)
