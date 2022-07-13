@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 
 public class BossFSM : MonoBehaviour
@@ -9,7 +10,10 @@ public class BossFSM : MonoBehaviour
 	private Yggdrasil.BossManager M_BossInfo;
 
 	private float time;
+    public float dieTime;
 	private int actionPoint;
+    public CinemachineVirtualCamera V_BossCamera; //카메라의 우선순위를 건들여 시점변경 플레이어의 값 10 10보다 높게설정시 보스로 시점전환 ex)  V_BossCamera.Priority = 11; 다시플레이어로 전환할려면 10보다 낮게 설정할것
+    //보스 등장, 보스 광역기? 궁극기?, 보스 사망시
 	//private bool actionCheck=false;
 	private bool spCheck = false;
 
@@ -37,11 +41,12 @@ public class BossFSM : MonoBehaviour
 		HIT         //피격
 	}
 
-	private BossState bossState;
+	public BossState bossState;
 
 
 	void StateNomal()
 	{
+       
 		//보스의 SP가 100%라면 다음 행동을 실행.
 		//if (M_BossInfo.GetTableExcel().MaxTM >= actionPoint)
 		//{
@@ -79,6 +84,15 @@ public class BossFSM : MonoBehaviour
 				break;
 		}
 	}
+    void StateDie()
+    {
+        dieTime += Time.deltaTime;
+        V_BossCamera.Priority = 11;
+        if (dieTime > 3f)
+        {
+            V_BossCamera.Priority = 9;
+        }
+    }
 
 
 	// Start is called before the first frame update
@@ -121,7 +135,9 @@ public class BossFSM : MonoBehaviour
 				break;
 			case BossState.DIE:
 
-				break;
+                StateDie();
+
+                break;
 			case BossState.IDLE:
 				//SP가 다 채워져 있거나 남아있는 상태, 행동의 변화를 대기하는 상태 -> 이때 피격 되면 전투상태로 바로 들어간다.  
 				StateIdle();

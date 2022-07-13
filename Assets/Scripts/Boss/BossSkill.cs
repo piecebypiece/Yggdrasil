@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 using DG.Tweening;
 
 
@@ -40,7 +41,9 @@ public class BossSkill : MonoBehaviour
 
 	private Animator boss_anim;
 
-	public float angleRange = 60f;
+    public CinemachineVirtualCamera V_BossCamera; //ì¹´ë©”ë¼ì˜ ìš°ì„ ìˆœìœ„ë¥¼ ê±´ë“¤ì—¬ ì‹œì ë³€ê²½ í”Œë ˆì´ì–´ì˜ ê°’ 10 10ë³´ë‹¤ ë†’ê²Œì„¤ì •ì‹œ ë³´ìŠ¤ë¡œ ì‹œì ì „í™˜ ex)  V_BossCamera.Priority = 11; ë‹¤ì‹œí”Œë ˆì´ì–´ë¡œ ì „í™˜í• ë ¤ë©´ 10ë³´ë‹¤ ë‚®ê²Œ ì„¤ì •í• ê²ƒ
+
+    public float angleRange = 60f;
 	public float distance = 5f;
 	public bool isCollision = false;
 
@@ -59,10 +62,11 @@ public class BossSkill : MonoBehaviour
 
 	public void Pull()
 	{
+        
+        V_BossCamera.Priority = 11;
 
-		
 
-		Debug.Log("2");
+        Debug.Log("2");
 		boss_anim.SetInteger("IdleToSkill", 4);
 		checkSkill = true;
 
@@ -71,27 +75,28 @@ public class BossSkill : MonoBehaviour
 
 		if (direction.magnitude < distance)
 		{
-			Debug.Log("¹üÀ§¾È¿¡ ÀÖ´Ù.");
+			Debug.Log("ë²”ìœ„ì•ˆì— ìˆë‹¤.");
 			if (Vector3.Dot(direction.normalized, transform.forward) > dotValue)
 			{
-				Debug.Log("ÄÚ·çÆ¾ ½ÃÀÛ.");
+				Debug.Log("ì½”ë£¨í‹´ ì‹œì‘.");
 				StartCoroutine(PullAction(target, transform.position,0.5f));
-			}
-		}
-
-		
-	}
+                V_BossCamera.Priority = 9;
+            }
+           
+        }
+        
+    }
 
 	public void Lightning()
 	{
 		Debug.Log("3");
-
-		boss_anim.SetInteger("IdleToSkill", 1);
+        V_BossCamera.Priority = 11;
+        boss_anim.SetInteger("IdleToSkill", 1);
 		checkSkill = true;
-		////ÁöÁ¤¹üÀ§³»ÀÇ ¸ğµç ÇÃ·¹ÀÌ¾î¸¦ Ã£Àº ÈÄ
-		Collider[] colls = Physics.OverlapSphere(transform.position, 15f, 1 << 8);  //8¹øÂ° ·¹ÀÌ¾î = Player
+		////ì§€ì •ë²”ìœ„ë‚´ì˜ ëª¨ë“  í”Œë ˆì´ì–´ë¥¼ ì°¾ì€ í›„
+		Collider[] colls = Physics.OverlapSphere(transform.position, 15f, 1 << 8);  //8ë²ˆì§¸ ë ˆì´ì–´ = Player
 
-		//ÇÃ·¹ÀÌ¾î°¡ ÀÖÀ»°æ¿ì
+		//í”Œë ˆì´ì–´ê°€ ìˆì„ê²½ìš°
 		if (colls.Length != 0)
 		{
 			GameObject lightning = Instantiate(Lightning_Effect);
@@ -113,7 +118,7 @@ public class BossSkill : MonoBehaviour
 
 		}
 		else
-			Debug.Log("ÁÖº¯ÀÇ ÇÃ·¹ÀÌ¾î°¡ ¾ø½À´Ï´Ù.");
+			Debug.Log("ì£¼ë³€ì˜ í”Œë ˆì´ì–´ê°€ ì—†ìŠµë‹ˆë‹¤.");
 	}
 
 	public void Thumderbolt()
@@ -148,15 +153,15 @@ public class BossSkill : MonoBehaviour
 		boss_anim.SetInteger("IdleToSkill", 1);
 		checkSkill = true;
 
-		//ÁöÁ¤¹üÀ§³»ÀÇ ¸ğµç ÇÃ·¹ÀÌ¾î¸¦ Ã£Àº ÈÄ
-		Collider[] colls = Physics.OverlapSphere(transform.position, 5f, 1 << 8);  //8¹øÂ° ·¹ÀÌ¾î = Player
+		//ì§€ì •ë²”ìœ„ë‚´ì˜ ëª¨ë“  í”Œë ˆì´ì–´ë¥¼ ì°¾ì€ í›„
+		Collider[] colls = Physics.OverlapSphere(transform.position, 5f, 1 << 8);  //8ë²ˆì§¸ ë ˆì´ì–´ = Player
 
 		if (colls.Length != 0)
 		{
 			StartCoroutine(SpeedDownAction(2f, colls));
 		}
 		else
-			Debug.Log("ÁÖº¯ÀÇ ÇÃ·¹ÀÌ¾î°¡ ¾ø½À´Ï´Ù.");
+			Debug.Log("ì£¼ë³€ì˜ í”Œë ˆì´ì–´ê°€ ì—†ìŠµë‹ˆë‹¤.");
 		
 	}
 
@@ -177,7 +182,8 @@ public class BossSkill : MonoBehaviour
 	IEnumerator PullAction(GameObject target, Vector3 currentPos,float endtime)
 	{
 		float time = 0f;
-		while(true)
+        
+        while (true)
 		{
 			time += Time.deltaTime;
 
@@ -186,8 +192,8 @@ public class BossSkill : MonoBehaviour
 
 
 			target.transform.position = Vector3.MoveTowards(target.transform.position, currentPos, 0.05f);
-
-			yield return null;
+            
+            yield return null;
 		}
 	}
 
@@ -232,7 +238,7 @@ public class BossSkill : MonoBehaviour
 
 			if(skillTime >= 0.25f && time <=5.0f)
 			{
-				bolt[boltnum].SetActive(true);  //¶³¾îÁú ¹ø°³¸¦ È°¼ºÈ­.
+				bolt[boltnum].SetActive(true);  //ë–¨ì–´ì§ˆ ë²ˆê°œë¥¼ í™œì„±í™”.
 				skillTime = 0f;
 				boltnum++;
 			}
@@ -292,7 +298,7 @@ public class BossSkill : MonoBehaviour
 
 			if (time >= endtime)
 			{
-				//Áö¼Ó½Ã°£ÀÌ ³¡³ª¸é ¼Óµµ¸¦ ¿ø·¡´ë·Î ÇØÁÜ.
+				//ì§€ì†ì‹œê°„ì´ ëë‚˜ë©´ ì†ë„ë¥¼ ì›ë˜ëŒ€ë¡œ í•´ì¤Œ.
 				for (int i = 0; i < colls.Length; i++)
 				{
 					colls[i].GetComponent<PlayerManager>().p_Status.MoveSpeed = 8f;
@@ -349,7 +355,7 @@ public class BossSkill : MonoBehaviour
 	// Update is called once per frame
 	void Update()
     {
-		//µğ¹ö±× È®ÀÎ¿ë.
+		//ë””ë²„ê·¸ í™•ì¸ìš©.
 		dotValue = Mathf.Cos(Mathf.Deg2Rad * (angleRange / 2));
 		direction = target.transform.position - transform.position;
 
@@ -397,7 +403,7 @@ public class BossSkill : MonoBehaviour
 	}
 
 #if UNITY_EDITOR
-	//¾Àºä¿¡¼­ È®ÀÎ¿ë
+	//ì”¬ë·°ì—ì„œ í™•ì¸ìš©
 	private void OnDrawGizmos()
 	{
 		UnityEditor.Handles.color = isCollision ? _red : _blue;
