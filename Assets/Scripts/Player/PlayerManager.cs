@@ -124,21 +124,29 @@ public class PlayerManager : MonoBehaviour
 		M_skillMgr = new SkillManager();
 
 
-	
+        //데이터 리스트 확인용(디버깅용)
+        //foreach (var element in DataTableManager.Instance.GetDataList())
+        //{
+        //    if(element == null)
+        //    {
+        //        break;
+        //    }
 
-		//for(int i=0;i< MainManager.Instance.GetStageManager().m_info.Count;i++)
-		//{
-		//	foreach (var element in MainManager.Instance.GetStageManager().m_info[i+1].DataList)
-		//	{
-		//		Debug.Log(element.Name_KR);
-		//	}
-		//}
+        //    Debug.Log(element.name);
+        //}
 
 
-		
-		//MainManager.Instance.GetStageManager().m_info[0].DataList
+        //DataManager라는 Object의 List에 해당 데이터를 넣어주면 찾아서 사용가능.(디버깅용)
+        //foreach (var element in DataTableManager.Instance.GetDataTable<Map_TableExcelLoader>().DataList)
+        //{
+        //    Debug.Log(element.No);
+        //    Debug.Log(element.StageName);
+        //}
 
-	}
+
+
+
+    }
 
     // Update is called once per frame
     void Update()

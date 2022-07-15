@@ -800,9 +800,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flag: 0
   m_DataTableList:
-  - {fileID: 11400000, guid: c86f8a36e28210d4a9622aba43a3f87d, type: 2}
-  - {fileID: 11400000, guid: 847834a6faba6b041bdcc49020782f01, type: 2}
-  - {fileID: 11400000, guid: 82a97c69f91ce8f4599fc2e90dd8ef8f, type: 2}
+  - {fileID: 11400000, guid: 45b2eaa2c4a810448ac9742f3c1f433a, type: 2}
+  - {fileID: 11400000, guid: a98a7001f02e88546ab74b0b2feaf068, type: 2}
 --- !u!4 &375676055
 Transform:
   m_ObjectHideFlags: 0
@@ -2251,9 +2250,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 134264c85e75ff5478645e35c2f12ac5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_data1: {fileID: 11400000, guid: c86f8a36e28210d4a9622aba43a3f87d, type: 2}
-  m_data2: {fileID: 11400000, guid: c86f8a36e28210d4a9622aba43a3f87d, type: 2}
-  m_data3: {fileID: 11400000, guid: c86f8a36e28210d4a9622aba43a3f87d, type: 2}
 --- !u!4 &1421419946
 Transform:
   m_ObjectHideFlags: 0

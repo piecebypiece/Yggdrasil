@@ -71,10 +71,10 @@ public class BossSkill : MonoBehaviour
 
 		if (direction.magnitude < distance)
 		{
-			Debug.Log("¹üÀ§¾È¿¡ ÀÖ´Ù.");
+			Debug.Log("ë²”ìœ„ì•ˆì— ìˆë‹¤.");
 			if (Vector3.Dot(direction.normalized, transform.forward) > dotValue)
 			{
-				Debug.Log("ÄÚ·çÆ¾ ½ÃÀÛ.");
+				Debug.Log("ì½”ë£¨í‹´ ì‹œì‘.");
 				StartCoroutine(PullAction(target, transform.position,0.5f));
 			}
 		}
@@ -88,10 +88,10 @@ public class BossSkill : MonoBehaviour
 
 		boss_anim.SetInteger("IdleToSkill", 1);
 		checkSkill = true;
-		////ÁöÁ¤¹üÀ§³»ÀÇ ¸ğµç ÇÃ·¹ÀÌ¾î¸¦ Ã£Àº ÈÄ
-		Collider[] colls = Physics.OverlapSphere(transform.position, 15f, 1 << 8);  //8¹øÂ° ·¹ÀÌ¾î = Player
+		////ì§€ì •ë²”ìœ„ë‚´ì˜ ëª¨ë“  í”Œë ˆì´ì–´ë¥¼ ì°¾ì€ í›„
+		Collider[] colls = Physics.OverlapSphere(transform.position, 15f, 1 << 8);  //8ë²ˆì§¸ ë ˆì´ì–´ = Player
 
-		//ÇÃ·¹ÀÌ¾î°¡ ÀÖÀ»°æ¿ì
+		//í”Œë ˆì´ì–´ê°€ ìˆì„ê²½ìš°
 		if (colls.Length != 0)
 		{
 			GameObject lightning = Instantiate(Lightning_Effect);
@@ -113,7 +113,7 @@ public class BossSkill : MonoBehaviour
 
 		}
 		else
-			Debug.Log("ÁÖº¯ÀÇ ÇÃ·¹ÀÌ¾î°¡ ¾ø½À´Ï´Ù.");
+			Debug.Log("ì£¼ë³€ì˜ í”Œë ˆì´ì–´ê°€ ì—†ìŠµë‹ˆë‹¤.");
 	}
 
 	public void Thumderbolt()
@@ -148,15 +148,15 @@ public class BossSkill : MonoBehaviour
 		boss_anim.SetInteger("IdleToSkill", 1);
 		checkSkill = true;
 
-		//ÁöÁ¤¹üÀ§³»ÀÇ ¸ğµç ÇÃ·¹ÀÌ¾î¸¦ Ã£Àº ÈÄ
-		Collider[] colls = Physics.OverlapSphere(transform.position, 5f, 1 << 8);  //8¹øÂ° ·¹ÀÌ¾î = Player
+		//ì§€ì •ë²”ìœ„ë‚´ì˜ ëª¨ë“  í”Œë ˆì´ì–´ë¥¼ ì°¾ì€ í›„
+		Collider[] colls = Physics.OverlapSphere(transform.position, 5f, 1 << 8);  //8ë²ˆì§¸ ë ˆì´ì–´ = Player
 
 		if (colls.Length != 0)
 		{
 			StartCoroutine(SpeedDownAction(2f, colls));
 		}
 		else
-			Debug.Log("ÁÖº¯ÀÇ ÇÃ·¹ÀÌ¾î°¡ ¾ø½À´Ï´Ù.");
+			Debug.Log("ì£¼ë³€ì˜ í”Œë ˆì´ì–´ê°€ ì—†ìŠµë‹ˆë‹¤.");
 		
 	}
 
@@ -232,7 +232,7 @@ public class BossSkill : MonoBehaviour
 
 			if(skillTime >= 0.25f && time <=5.0f)
 			{
-				bolt[boltnum].SetActive(true);  //¶³¾îÁú ¹ø°³¸¦ È°¼ºÈ­.
+				bolt[boltnum].SetActive(true);  //ë–¨ì–´ì§ˆ ë²ˆê°œë¥¼ í™œì„±í™”.
 				skillTime = 0f;
 				boltnum++;
 			}
@@ -292,7 +292,7 @@ public class BossSkill : MonoBehaviour
 
 			if (time >= endtime)
 			{
-				//Áö¼Ó½Ã°£ÀÌ ³¡³ª¸é ¼Óµµ¸¦ ¿ø·¡´ë·Î ÇØÁÜ.
+				//ì§€ì†ì‹œê°„ì´ ëë‚˜ë©´ ì†ë„ë¥¼ ì›ë˜ëŒ€ë¡œ í•´ì¤Œ.
 				for (int i = 0; i < colls.Length; i++)
 				{
 					colls[i].GetComponent<PlayerManager>().p_Status.MoveSpeed = 8f;
@@ -349,7 +349,7 @@ public class BossSkill : MonoBehaviour
 	// Update is called once per frame
 	void Update()
     {
-		//µğ¹ö±× È®ÀÎ¿ë.
+		//ë””ë²„ê·¸ í™•ì¸ìš©.
 		dotValue = Mathf.Cos(Mathf.Deg2Rad * (angleRange / 2));
 		direction = target.transform.position - transform.position;
 
@@ -390,14 +390,14 @@ public class BossSkill : MonoBehaviour
 			{
 				checkSkill = false;
 				checkTime = 0f;
-				boss_anim.SetInteger("IdleToSkill", 0);
+				boss_anim.SetInteger("IdleToSkill", 0); 
 			}
 		}
 
 	}
 
 #if UNITY_EDITOR
-	//¾Àºä¿¡¼­ È®ÀÎ¿ë
+	//ì”¬ë·°ì—ì„œ í™•ì¸ìš©
 	private void OnDrawGizmos()
 	{
 		UnityEditor.Handles.color = isCollision ? _red : _blue;

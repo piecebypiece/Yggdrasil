@@ -10,14 +10,17 @@ public enum E_DataTableType
     BossStat,
     CharStat,
     SoulStat,
+    Map,
+
     Max
 }
-//ÇØ¾ßÇÒ°Í : ½Ì±ÛÅæ ±¸ÇöÇØ¼­ ¸Å´ÏÀú¸¦ ½Ì±ÛÅæÀ¸·Î »ı¼º½ÃÅ°±â.
+
+//í•´ì•¼í• ê²ƒ : ì‹±ê¸€í†¤ êµ¬í˜„í•´ì„œ ë§¤ë‹ˆì €ë¥¼ ì‹±ê¸€í†¤ìœ¼ë¡œ ìƒì„±ì‹œí‚¤ê¸°.
 [DefaultExecutionOrder(-99)]
 public class DataTableManager : Singleton_Ver1.Singleton<DataTableManager>
 {
-    #region ScriptableObject ¼³¸í
-    /*ScriptableObject µ¥ÀÌÅÍ¸¦ »ç¿ëÇÏ±â À§ÇÔ, Á÷·ÄÈ­ ÇÏ¿© À¯´ÏÆ¼¿¡¼­ »ı¼º ¹× °ü¸® °¡´É.
+    #region ScriptableObject ì„¤ëª…
+    /*ScriptableObject ë°ì´í„°ë¥¼ ì‚¬ìš©í•˜ê¸° ìœ„í•¨, ì§ë ¬í™” í•˜ì—¬ ìœ ë‹ˆí‹°ì—ì„œ ìƒì„± ë° ê´€ë¦¬ ê°€ëŠ¥.
 	https://junwe99.tistory.com/13
 	https://everyday-devup.tistory.com/53
 	*/
@@ -25,13 +28,20 @@ public class DataTableManager : Singleton_Ver1.Singleton<DataTableManager>
     #endregion
     [SerializeField]
     protected List<ScriptableObject> m_DataTableList;
+
     protected static Dictionary<E_DataTableType, ScriptableObject> m_DataTables;
-    #region ´Ù¸¥ ½ºÅ©¸³Æ®¿¡¼­ µ¥ÀÌÅÍ È£Ãâ
+    #region ë‹¤ë¥¸ ìŠ¤í¬ë¦½íŠ¸ì—ì„œ ë°ì´í„° í˜¸ì¶œ
+
+    public List<ScriptableObject> GetDataList()
+    {
+        return m_DataTableList;
+    }
+
     public T GetDataTable<T>() where T : ScriptableObject
     {
         string typeName = typeof(T).ToString().Split('_')[0];
         E_DataTableType type;
-        //¹®ÀÚ¿­À» ¿­°ÅÇüÀ¸·Î º¯È¯.
+        //ë¬¸ìì—´ì„ ì—´ê±°í˜•ìœ¼ë¡œ ë³€í™˜.
         if (Enum.TryParse<E_DataTableType>(typeName, out type))
         {
             return m_DataTables[type] as T;
@@ -40,19 +50,27 @@ public class DataTableManager : Singleton_Ver1.Singleton<DataTableManager>
     }
     #endregion
 
+
+
     private void Awake()
     {
         m_DataTables = new Dictionary<E_DataTableType, ScriptableObject>();
 
         for (E_DataTableType i = E_DataTableType.None + 1; i < E_DataTableType.Max; ++i)
         {
-            //datatable list(µ¥ÀÌÅÍ ÇÁ¸®ÆÕ ¸ñ·Ï)¿¡¼­ Å¸ÀÔ°ú ÀÏÄ¡ÇÏ´Â °ÍÀÌ ÀÖÀ¸¸é µñ¼Å³Ê¸®¿¡ Ãß°¡ÇÑ´Ù.
-            #region SingleOrDefault ¼³¸í
-            //SingleOrDefault :°°Àº ÀÌ¸§ÀÇ µ¥ÀÌÅÍ 1°³ ÀÌ»óÀ» Á¶È¸ÇÒ ½Ã ¿À·ù »ı±è. 1°³¸¸ Á¶È¸ÇÒ¶§ »ç¿ë.
+            //datatable list(ë°ì´í„° í”„ë¦¬íŒ¹ ëª©ë¡)ì—ì„œ íƒ€ì…ê³¼ ì¼ì¹˜í•˜ëŠ” ê²ƒì´ ìˆìœ¼ë©´ ë”•ì…”ë„ˆë¦¬ì— ì¶”ê°€í•œë‹¤.
+
+            #region SingleOrDefault ì„¤ëª…
+            //SingleOrDefault :ê°™ì€ ì´ë¦„ì˜ ë°ì´í„° 1ê°œ ì´ìƒì„ ì¡°íšŒí•  ì‹œ ì˜¤ë¥˜ ìƒê¹€. 1ê°œë§Œ ì¡°íšŒí• ë•Œ ì‚¬ìš©.
             //https://im-first-rate.tistory.com/91
             #endregion
             m_DataTables.Add(i, m_DataTableList.Where(item => i.ToString() + "_TableLoader" == item.name).SingleOrDefault());
         }
     }
+
+
+
+
+
 }
 
