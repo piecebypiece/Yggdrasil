@@ -4,16 +4,8 @@ using UnityEngine;
 
 public class MainManager : MonoBehaviour
 {
-	
 
 	public static MainManager instance;
-
-
-	//[Header("筌??怨쀬뵠??)]
-	//public BossStat_TableExcelLoader m_data1;
-	//public BossStat_TableExcelLoader m_data2;
-	//public BossStat_TableExcelLoader m_data3;
-
 
 
 	private UIManager m_UIManager;
@@ -28,13 +20,8 @@ public class MainManager : MonoBehaviour
 		if (null == instance)
 		{
 			instance = this;
-
-			//筌띲끇??? ???샒?봔??
 			m_UIManager = new UIManager();
 			m_StageManager = new StageManager();
-			//m_StageManager.SetMapInfo(m_data1, m_data1, m_data1);
-
-
 			DontDestroyOnLoad(this.gameObject);
 
 		}
