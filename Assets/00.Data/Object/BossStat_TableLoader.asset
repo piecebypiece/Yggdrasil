@@ -13,4 +13,55 @@ MonoBehaviour:
   m_Name: BossStat_TableLoader
   m_EditorClassIdentifier: 
   filepath: Assets\00.Data\txt\BossStat_Table.txt
-  DataList: []
+  DataList:
+  - No: 1
+    Name_KR: "\uB77C\uADF8\uB098\uB85C\uD06C"
+    Name_EN: Ragnarok
+    BossIndex: 21001
+    Atk: 50
+    HP: 2000
+    Def: 10
+    SRange: 1
+    CRange: 2
+    FRange: 3
+    MaxStamina: 100
+    Speed: 20
+    MoveStUsed: 5
+    Skill1: 1000123
+    Skill2: 1000124
+    Skill3: 1000125
+    Skill4: 1000126
+  - No: 2
+    Name_KR: "\uB4C0\uB77C\uD55C"
+    Name_EN: Durahan
+    BossIndex: 21002
+    Atk: 30
+    HP: 5000
+    Def: 20
+    SRange: 1
+    CRange: 2
+    FRange: 3
+    MaxStamina: 100
+    Speed: 20
+    MoveStUsed: 8
+    Skill1: 1000123
+    Skill2: 1000124
+    Skill3: 1000125
+    Skill4: 1000126
+  - No: 3
+    Name_KR: "\uD5EC\uB9AC\uC544"
+    Name_EN: Hellia
+    BossIndex: 21003
+    Atk: 80
+    HP: 3000
+    Def: 5
+    SRange: 1
+    CRange: 2
+    FRange: 3
+    MaxStamina: 100
+    Speed: 20
+    MoveStUsed: 10
+    Skill1: 1000123
+    Skill2: 1000124
+    Skill3: 1000125
+    Skill4: 1000126
