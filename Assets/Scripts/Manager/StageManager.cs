@@ -5,7 +5,7 @@ using UnityEngine;
 public class StageManager : MonoBehaviour
 {
 
-	//public Dictionary<int, BossStat_TableExcelLoader> m_info;
+	public Dictionary<int, Map_TableExcelLoader> m_info;
 
 
 
@@ -19,6 +19,8 @@ public class StageManager : MonoBehaviour
 		//}
 
 	}
+
+    //스테이지 매니저 수정하기.
 
 	//public void SetMapInfo(BossStat_TableExcelLoader m1, BossStat_TableExcelLoader m2, BossStat_TableExcelLoader m3)
 	//{

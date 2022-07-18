@@ -23,7 +23,7 @@ public struct Map_TableExcel
 [CreateAssetMenu(fileName="Map_TableLoader", menuName= "Scriptable Object/Map_TableLoader")]
 public class Map_TableExcelLoader :ScriptableObject
 {
-	[SerializeField] string filepath =@"Assets\00.Data\txt\Map_Table.txt";
+	[SerializeField] string filepath =@"Assets\00.Data\Txt\Map_Table.txt";
 	public List<Map_TableExcel> DataList;
 
 	private Map_TableExcel Read(string line)

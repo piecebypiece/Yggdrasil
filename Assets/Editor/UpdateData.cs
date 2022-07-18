@@ -50,9 +50,9 @@ public class UpdateData : AssetPostprocessor
 
             //Debug.Log(exe_path);
             //Debug.Log(f_path);
-			//Debug.Log(f_name);
-			//Debug.Log(f_extension);
-		}
+            //Debug.Log(f_name);
+            //Debug.Log(f_extension);
+        }
 		else
 			return;
 	}

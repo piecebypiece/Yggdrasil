@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eca0caa8cd1e4b488a0fe1e8ea4e2c0, type: 3}
   m_Name: Map_TableLoader
   m_EditorClassIdentifier: 
-  filepath: Assets\00.Data\txt\Map_Table.txt
+  filepath: Assets\00.Data\Txt\Map_Table.txt
   DataList:
   - No: 1
     Index: 301001

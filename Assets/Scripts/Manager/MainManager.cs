@@ -14,7 +14,8 @@ public class MainManager : MonoBehaviour
 	//public BossStat_TableExcelLoader m_data2;
 	//public BossStat_TableExcelLoader m_data3;
 
-	//筌띲끇???
+
+
 	private UIManager m_UIManager;
 	private StageManager m_StageManager;
 

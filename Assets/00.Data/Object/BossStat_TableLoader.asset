@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e221f4b00aab2c4f8ea6fbee8113a02, type: 3}
   m_Name: BossStat_TableLoader
   m_EditorClassIdentifier: 
-  filepath: Assets\00.Data\txt\BossStat_Table.txt
+  filepath: Assets\00.Data\Txt\BossStat_Table.txt
   DataList:
   - No: 1
     Name_KR: "\uB77C\uADF8\uB098\uB85C\uD06C"
