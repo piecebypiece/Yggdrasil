@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Cinemachine;      //by MikangMark
 
 public class BossFSM : MonoBehaviour
 {
@@ -13,8 +14,14 @@ public class BossFSM : MonoBehaviour
 	//private bool actionCheck=false;
 	private bool spCheck = false;
 
+    //by MikangMark
+    //보스 사망후 시간을 재는 변수
+    public float dieTime;   
+    //카메라의 우선순위를 건들여 시점변경 플레이어의 값 10 10보다 높게설정시 보스로 시점전환 ex)  V_BossCamera.Priority = 11; 다시플레이어로 전환할려면 10보다 낮게 설정할것
+    public CinemachineVirtualCamera V_BossCamera; 
+    //보스 등장, 보스 광역기? 궁극기?, 보스 사망시(현제는 보스사망시에만 카메라가 보스로향하게 되어있음)
 
-	public enum BossState
+    public enum BossState
 	{
 		NOMAL,      //일반(상태이상에 걸리지 않은 정상 상태),대기(SP를 회복하는 상태)
 		IDLE,       //행동의 전환을 기다리는 시점(공격,이동,스킬)
@@ -37,7 +44,7 @@ public class BossFSM : MonoBehaviour
 		HIT         //피격
 	}
 
-	private BossState bossState;
+	public BossState bossState;
 
 
 	void StateNomal()
@@ -80,9 +87,19 @@ public class BossFSM : MonoBehaviour
 		}
 	}
 
+    void StateDie()         //by MikangMark
+    {
+        dieTime += Time.deltaTime;               //보스 사망경과시간
+        V_BossCamera.Priority = 11;              //보스로 카메라 전환
+        if (dieTime > 3f)                        //보스가 죽은뒤 3초가 지나면
+        {                                        //
+            V_BossCamera.Priority = 9;           //시점 다시 플레이어로 이동
+        }
+    }
 
-	// Start is called before the first frame update
-	void Start()
+
+    // Start is called before the first frame update
+    void Start()
 	{
 		//M_BossInfo = new Yggdrasil.BossManager(21001);
 
@@ -120,8 +137,9 @@ public class BossFSM : MonoBehaviour
 
 				break;
 			case BossState.DIE:
+                StateDie();     //by MikangMark
 
-				break;
+                break;
 			case BossState.IDLE:
 				//SP가 다 채워져 있거나 남아있는 상태, 행동의 변화를 대기하는 상태 -> 이때 피격 되면 전투상태로 바로 들어간다.  
 				StateIdle();
