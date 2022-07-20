@@ -5,7 +5,7 @@ using UnityEngine;
 
 
 
-namespace Yggdrasil
+namespace Yggdrasil.BossSkillInfo
 {
 
 	public enum BossSkillType { WIDE=1,TARGET,LINE,DIFFUSION, SUMMONS  }
@@ -13,51 +13,42 @@ namespace Yggdrasil
 	public class BossSkillData
 	{
 
-		public string Name_KR { get; set; }  //ÇÑ±¹ÀÌ¸§ 
-		public string Name_EN { get; set; }     //¿µ¹®ÀÌ¸§
-		public int BossIndex { get; set; }    //½ºÅ³ ÀÎµ¦½º °ª ¾ÆÁ÷±îÁø ¾î¶»°Ô »ç¿ëÇÒÁö ¾Ö¸ÅÇÔ.
-		public int TargetType { get; set; }        // Àû±ºÀÌ³Ä ¾Æ±ºÀÌ³Ä (¾Æ±ºÀÏ°æ¿ì °ÅÀÇ È®Á¤ÀûÀ¸·Î ¹öÇÁ½ºÅ³), ¸ğµÎ( ¹üÀ§³»¿¡ ÀÖ´Â ¸ğµç ¿ÀºêÁ§Æ®) 
-		public float Power { get; set; }  //ÆÄ¿ö
+        public BossSkillType SkillType;
+        public float lifeTime;
+        public int SkillAdded;
+
+        public string Name_KR { get; set; }  //í•œêµ­ì´ë¦„ 
+		public string Name_EN { get; set; }     //ì˜ë¬¸ì´ë¦„
+		public int BossIndex { get; set; }    //ìŠ¤í‚¬ ì¸ë±ìŠ¤ ê°’ ì•„ì§ê¹Œì§„ ì–´ë–»ê²Œ ì‚¬ìš©í• ì§€ ì• ë§¤í•¨.
+		public int TargetType { get; set; }        // ì êµ°ì´ëƒ ì•„êµ°ì´ëƒ (ì•„êµ°ì¼ê²½ìš° ê±°ì˜ í™•ì •ì ìœ¼ë¡œ ë²„í”„ìŠ¤í‚¬), ëª¨ë‘( ë²”ìœ„ë‚´ì— ìˆëŠ” ëª¨ë“  ì˜¤ë¸Œì íŠ¸) 
+		public float Power { get; set; }  //íŒŒì›Œ
 		public float CoolTime { get; set; }  //
 		public float SkillDistance { get; set; }
 		public float SkillRange { get; set; }
-		public BossSkillType SkillType { get; set; }       // ½ºÅ³ÀÇ ÇüÅÂ (±¤¿ªÀÌ³Ä ,´ë»óÀÌ³Ä µîµî)   => ÀÓÀÇ·Î float¿¡¼­ BossSkillTypeÇüÀ¸·Î ¹Ù²Ş.
+		//public BossSkillType SkillType { get; set; }       // ìŠ¤í‚¬ì˜ í˜•íƒœ (ê´‘ì—­ì´ëƒ ,ëŒ€ìƒì´ëƒ ë“±ë“±)   => ì„ì˜ë¡œ floatì—ì„œ BossSkillTypeí˜•ìœ¼ë¡œ ë°”ê¿ˆ.
 
-		//public float direction { get; set; }   //¹æÇâ ÇöÀç´Â »ç¿ëÇÏÁö¾ÊÀ½ (6¹æÇâÁ¸Àç)
+		//public float direction { get; set; }   //ë°©í–¥ í˜„ì¬ëŠ” ì‚¬ìš©í•˜ì§€ì•ŠìŒ (6ë°©í–¥ì¡´ì¬)
 
-		public bool move { get; set; }  //ÀÌµ¿
+		public bool move { get; set; }  //ì´ë™
 
-		public float lifeTime { get; set; }  //»ıÁ¸
+		//public float lifeTime { get; set; }  //ìƒì¡´
 
-		public float DoT { get; set; }   // ½ºÅ³ ÁÖ±â
-		public int SkillAdded { get; set; }      // Ãß°¡½ºÅ³
-		public int BuffADDED { get; set; }        //Ãß°¡¹öÇÁ -> ¹öÇÁ Å×ÀÌºíÀ» µû·Î ¸¸µë.
+		public float DoT { get; set; }   // ìŠ¤í‚¬ ì£¼ê¸°
+		//public int SkillAdded { get; set; }      // ì¶”ê°€ìŠ¤í‚¬
+		public int BuffADDED { get; set; }        //ì¶”ê°€ë²„í”„ -> ë²„í”„ í…Œì´ë¸”ì„ ë”°ë¡œ ë§Œë“¬.
 
-		public int SkillAnimation { get; set; }     //½ºÅ³ ¾Ö´Ï¸ŞÀÌ¼Ç
+		public int SkillAnimation { get; set; }     //ìŠ¤í‚¬ ì• ë‹ˆë©”ì´ì…˜
 
 
 
-		public int AreaPrefab { get; set; }    //ÆÇÁ¤ ÇÁ¸®ÆÕ.
+		public int AreaPrefab { get; set; }    //íŒì • í”„ë¦¬íŒ¹.
 
-		public int LunchPrefab { get; set; }  //¹ß»ç ÇÁ¸®ÆÕ.
+		public int LunchPrefab { get; set; }  //ë°œì‚¬ í”„ë¦¬íŒ¹.
 
-		public int FirePrefab { get; set; }  //Åõ»çÃ¼ ÇÁ¸®ÆÕ
+		public int FirePrefab { get; set; }  //íˆ¬ì‚¬ì²´ í”„ë¦¬íŒ¹
 
-		public int DamPrefab { get; set; }  //ÇÇ°İ ÇÁ¸®ÆÕ.
+		public int DamPrefab { get; set; }  //í”¼ê²© í”„ë¦¬íŒ¹.
 
 	}
 }
-public class BossSkillData : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-}
