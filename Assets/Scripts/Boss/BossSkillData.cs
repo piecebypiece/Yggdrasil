@@ -20,7 +20,7 @@ namespace Yggdrasil.BossSkillInfo
         public string Name_KR { get; set; }  //한국이름 
 		public string Name_EN { get; set; }     //영문이름
 		public int BossIndex { get; set; }    //스킬 인덱스 값 아직까진 어떻게 사용할지 애매함.
-		public int TargetType { get; set; }        // 적군이냐 아군이냐 (아군일경우 거의 확정적으로 버프스킬), 모두( 범위내에 있는 모든 오브젝트) 
+		public int TargetType { get; set; }   // 적군이냐 아군이냐 (아군일경우 거의 확정적으로 버프스킬), 모두( 범위내에 있는 모든 오브젝트) 
 		public float Power { get; set; }  //파워
 		public float CoolTime { get; set; }  //
 		public float SkillDistance { get; set; }
@@ -38,8 +38,6 @@ namespace Yggdrasil.BossSkillInfo
 		public int BuffADDED { get; set; }        //추가버프 -> 버프 테이블을 따로 만듬.
 
 		public int SkillAnimation { get; set; }     //스킬 애니메이션
-
-
 
 		public int AreaPrefab { get; set; }    //판정 프리팹.
 
