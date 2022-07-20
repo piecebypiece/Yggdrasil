@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using Cinemachine;      //by MikangMark
-
 
 public class BossFSM : MonoBehaviour
 {
@@ -12,14 +10,8 @@ public class BossFSM : MonoBehaviour
 
 	private float time;
 	private int actionPoint;
-    //private bool actionCheck=false;
-
-    //카메라의 우선순위를 건들여 시점변경 플레이어의 값 10 10보다 높게설정시 보스로 시점전환 ex)  V_BossCamera.Priority = 11; 다시플레이어로 전환할려면 10보다 낮게 설정할것
-    public float dieTime;
-    public CinemachineVirtualCamera V_BossCamera;
-    //보스 등장, 보스 광역기? 궁극기?, 보스 사망시(지금은 사망시에만 카메라전환이 이루어지도록 해두었음)
-    
-    private bool spCheck = false;
+	//private bool actionCheck=false;
+	private bool spCheck = false;
 
 
 	public enum BossState
@@ -45,7 +37,7 @@ public class BossFSM : MonoBehaviour
 		HIT         //피격
 	}
 
-	public BossState bossState;
+	private BossState bossState;
 
 
 	void StateNomal()
@@ -88,19 +80,9 @@ public class BossFSM : MonoBehaviour
 		}
 	}
 
-    void StateDie()     //by MikangMark
-    {
-        dieTime += Time.deltaTime;      //보스가죽은뒤부터 시간체크
-        V_BossCamera.Priority = 11;     //보스시점으로 이동
-        if (dieTime > 3f)               //보스가 죽은뒤 3초가지나면 카메라 플레이어시점으로 다시전환
-        {
-            V_BossCamera.Priority = 9;
-        }
-    }
 
-
-    // Start is called before the first frame update
-    void Start()
+	// Start is called before the first frame update
+	void Start()
 	{
 		//M_BossInfo = new Yggdrasil.BossManager(21001);
 
@@ -138,9 +120,8 @@ public class BossFSM : MonoBehaviour
 
 				break;
 			case BossState.DIE:
-                StateDie();     //by MikangMark
 
-                break;
+				break;
 			case BossState.IDLE:
 				//SP가 다 채워져 있거나 남아있는 상태, 행동의 변화를 대기하는 상태 -> 이때 피격 되면 전투상태로 바로 들어간다.  
 				StateIdle();
