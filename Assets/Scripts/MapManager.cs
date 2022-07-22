@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 /*
- * ÇØ¾ßÇÒ ¸ñ·Ï
- * 1. ¸Þ¸ð¸®Ç® ¸¸µé°í ¸Þ¸ð¸®Ç®¿¡¼­ Å¸ÀÏ °ü¸®ÇÏµµ·Ï ÇÏ±â.
+ * í•´ì•¼í•  ëª©ë¡
+ * 1. ë©”ëª¨ë¦¬í’€ ë§Œë“¤ê³  ë©”ëª¨ë¦¬í’€ì—ì„œ íƒ€ì¼ ê´€ë¦¬í•˜ë„ë¡ í•˜ê¸°.
  * (
- * + Ãß°¡ÀûÀ¸·Î Å¸ÀÏ¿¡ µû¶ó Å¸ÀÔÀ» ÁöÁ¤ÇÒ °ÍÀÌ¶ó°í ±âÈ¹´ÔÀÌ ¸»¾¸ ÇÏ¼ÌÀ¸´Ï±î Å¸ÀÔº°·Î ¸Þ¸ð¸®Ç®À» ¸¸µé¾î¼­
- *    °¢ Å¸ÀÏ¿¡ ´ëÇÑ Á¤º¸¸¦ ÀúÀå ÇÒ °Í.
+ * + ì¶”ê°€ì ìœ¼ë¡œ íƒ€ì¼ì— ë”°ë¼ íƒ€ìž…ì„ ì§€ì •í•  ê²ƒì´ë¼ê³  ê¸°íšë‹˜ì´ ë§ì”€ í•˜ì…¨ìœ¼ë‹ˆê¹Œ íƒ€ìž…ë³„ë¡œ ë©”ëª¨ë¦¬í’€ì„ ë§Œë“¤ì–´ì„œ
+ *    ê° íƒ€ì¼ì— ëŒ€í•œ ì •ë³´ë¥¼ ì €ìž¥ í•  ê²ƒ.
  * )
- * 2.Å¸ÀÏ Å¬¸¯¿¡ ´ëÇÑ ¸í·É Â¥±â( ex-Á¤·É¼ÒÈ¯ÀÌ È°¼ºÈ­ µÈ °æ¿ì Å¸ÀÏ Å¬¸¯ °¡´É, Å¬¸¯µÈ Å¸ÀÏ Á¤º¸¸¦ ¿äÃ»ÇÑ °÷¿¡¼­ »ç¿ëÇÏµµ·Ï) 
- * 3.Tile ½ºÅ©¸³Æ® »ý¼ºÇÏ¿© Å¸ÀÏ¸¶´Ù °¡Áö°í ÀÖ¾î¾ß ÇÒ Á¤º¸¸¦ ¼ÂÆÃÇØµÎ±â.(À§Ä¡,Å¸ÀÏ Å¸ÀÔ µî ÀÚ¼¼ÇÑ°Ç ±âÈ¹¼­ ³ª¿À¸é)
+ * 2.íƒ€ì¼ í´ë¦­ì— ëŒ€í•œ ëª…ë ¹ ì§œê¸°( ex-ì •ë ¹ì†Œí™˜ì´ í™œì„±í™” ëœ ê²½ìš° íƒ€ì¼ í´ë¦­ ê°€ëŠ¥, í´ë¦­ëœ íƒ€ì¼ ì •ë³´ë¥¼ ìš”ì²­í•œ ê³³ì—ì„œ ì‚¬ìš©í•˜ë„ë¡) 
+ * 3.Tile ìŠ¤í¬ë¦½íŠ¸ ìƒì„±í•˜ì—¬ íƒ€ì¼ë§ˆë‹¤ ê°€ì§€ê³  ìžˆì–´ì•¼ í•  ì •ë³´ë¥¼ ì…‹íŒ…í•´ë‘ê¸°.(ìœ„ì¹˜,íƒ€ì¼ íƒ€ìž… ë“± ìžì„¸í•œê±´ ê¸°íšì„œ ë‚˜ì˜¤ë©´)
  */
 public class MapManager : MonoBehaviour
 {
@@ -21,19 +21,22 @@ public class MapManager : MonoBehaviour
     int m_mapHeight;
     [SerializeField]
     bool flag;
+
     #region TileInfo
     public GameObject HexTilePrefab;
-    float m_CToSVertex_Length; //ÁßÁ¡°ú µµÇü ¹Ù±ùÂÊ ²ÀÁöÁ¡±îÁöÀÇ ±æÀÌ
-    float m_CToSLine_Length;  //ÁßÁ¡°ú ¹Ù±ù ¼±±îÁöÀÇ ±æÀÌ
-    float m_SideLine_Length; //¹Ù±ù ¼± ±æÀÌ
+    float m_CToSVertex_Length; //ì¤‘ì ê³¼ ë„í˜• ë°”ê¹¥ìª½ ê¼­ì§€ì ê¹Œì§€ì˜ ê¸¸ì´
+    float m_CToSLine_Length;  //ì¤‘ì ê³¼ ë°”ê¹¥ ì„ ê¹Œì§€ì˜ ê¸¸ì´
+    float m_SideLine_Length; //ë°”ê¹¥ ì„  ê¸¸ì´
     #endregion
+
     #region GroundInfo
     public GameObject GroundPrefab;
-    //Å¸ÀÏ 1°³ Ãß°¡´ç ¹Ù´Ú Å©±â ´Ã¾î³¯ ¼öÄ¡
+    //íƒ€ì¼ 1ê°œ ì¶”ê°€ë‹¹ ë°”ë‹¥ í¬ê¸° ëŠ˜ì–´ë‚  ìˆ˜ì¹˜
     float GroundNomalWidth = 48.3f;
     float GroundNomalHeight = 44f;
     GameObject Ground;
     #endregion
+
     void Start()
     {
         InitTileInfo();
