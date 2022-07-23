@@ -4,6 +4,7 @@ using UnityEngine;
 
 using Cinemachine;      //by MikangMark
 
+
 public class BossFSM : MonoBehaviour
 {
 
@@ -14,13 +15,17 @@ public class BossFSM : MonoBehaviour
 	//private bool actionCheck=false;
 	private bool spCheck = false;
 
-    //by MikangMark
+    #region by MikangMark
+    
     //보스 사망후 시간을 재는 변수
     public float dieTime;   
     //카메라의 우선순위를 건들여 시점변경 플레이어의 값 10 10보다 높게설정시 보스로 시점전환 ex)  V_BossCamera.Priority = 11; 다시플레이어로 전환할려면 10보다 낮게 설정할것
-    public CinemachineVirtualCamera V_BossCamera; 
+    public CinemachineVirtualCamera V_BossCamera;
     //보스 등장, 보스 광역기? 궁극기?, 보스 사망시(현제는 보스사망시에만 카메라가 보스로향하게 되어있음)
 
+    public GameObject hudDamageText;
+    public Transform hudPos;
+    #endregion
     public enum BossState
 	{
 		NOMAL,      //일반(상태이상에 걸리지 않은 정상 상태),대기(SP를 회복하는 상태)
@@ -87,14 +92,28 @@ public class BossFSM : MonoBehaviour
 		}
 	}
 
-    void StateDie()         //by MikangMark
+    void StateDie()         
     {
+        #region by MikangMark
         dieTime += Time.deltaTime;               //보스 사망경과시간
         V_BossCamera.Priority = 11;              //보스로 카메라 전환
         if (dieTime > 3f)                        //보스가 죽은뒤 3초가 지나면
         {                                        //
             V_BossCamera.Priority = 9;           //시점 다시 플레이어로 이동
         }
+        #endregion
+    }
+
+    void StateHit()
+    {
+        #region by MikangMark
+        int damage = 100;                                 //나중에 매개변수에서 데미지 받기
+        GameObject hudText = Instantiate(hudDamageText); // 생성할 텍스트 오브젝트
+        hudText.transform.position = hudPos.position; // 표시될 위치
+        hudText.GetComponent<DamageTxt>().damage = damage; // 데미지 전달
+        //base.TakeDamage(damage);
+        bossState = BossState.NOMAL;
+        #endregion
     }
 
 
@@ -137,7 +156,7 @@ public class BossFSM : MonoBehaviour
 
 				break;
 			case BossState.DIE:
-                StateDie();     //by MikangMark
+                StateDie();     
 
                 break;
 			case BossState.IDLE:
@@ -162,8 +181,9 @@ public class BossFSM : MonoBehaviour
 
 				break;
 			case BossState.HIT:
-				
-				break;
+                StateHit();
+
+                break;
 			case BossState.DETECTION:
 				//배틀 상태에서 적이 있는지 찾는상태(?) -> 굳이? 메서드로 빼버리는게 맞는것 같은데.
 				break;
