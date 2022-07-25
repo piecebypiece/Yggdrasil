@@ -13,7 +13,7 @@ public class FollowCam : MonoBehaviour
     void Start()
     {
 		//Target = GameObject.Find("Player");
-		camOffset = new Vector3(0, 8, -9);
+		camOffset = new Vector3(0,22, -13);
 
 	}
 

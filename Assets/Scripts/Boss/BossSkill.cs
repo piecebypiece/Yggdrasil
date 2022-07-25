@@ -29,6 +29,9 @@ public partial class EMath
 
 public class BossSkill : MonoBehaviour
 {
+
+    public enum BossSkillType { WIDE = 1, TARGET, LINE, DIFFUSION, SUMMONS }
+
     public GameObject target;
     public GameObject[] EnemyPrefebs = new GameObject[2];
     public GameObject Laser_Effect;
@@ -36,6 +39,15 @@ public class BossSkill : MonoBehaviour
     public GameObject Thunderbolt_Effect;
 
     private Animator boss_anim;
+    private string currentState;
+
+    //Animation States
+    const string BOSS_IDLE = "Idle01";
+    const string BOSS_SKILL01 = "Skill01";
+    const string BOSS_SKILL02 = "Skill02";
+    const string BOSS_SKILL03 = "Skill03";
+    const string BOSS_SKILL04 = "Skill04";
+
 
     public float angleRange = 60f;
     public float distance = 5f;
@@ -51,29 +63,276 @@ public class BossSkill : MonoBehaviour
 
     float dotValue = 0f;
 
-    private BossSkillSet m_bossSkillSet;
+    //private BossSkillSet m_bossSkillSet;
 
     private int m_SkillCheck = 0;  //보스의 스킬연계가 얼만큼 진행되는지.
     private bool skillAction = true;
+    private int m_BossSkillIndex;
 
-    public void SettingSkillAction()
+
+    private int m_PlayerRow;
+    private int m_PlayerColumn;
+
+    private int m_BossRow;
+    private int m_BossColumn;
+
+    private Map map;
+
+    //private BossStat_TableExcel m_CurrentBossStat;
+    private BossSkill_TableExcel m_CurrentBossSkill;
+
+    public void BossSkillAction(int skillIndex)
     {
-        Debug.Log("1");
+        //m_BossSkillIndex = skillIndex;
+
+        Debug.Log("스킬진입");
+
+        foreach (var item in DataTableManager.Instance.GetDataTable<BossSkill_TableExcelLoader>().DataList)
+        {
+            if (item.BossIndex == skillIndex)
+            {
+                m_CurrentBossSkill = item; //현재 스킬 정보를 찾아낸다.
+                break;
+            }
+        }
+
+        //플레이어의 위치와 보스의 배열 위치를 알아낸다.
+        m_PlayerRow = MainManager.Instance.GetStageManager().m_PlayerRow;
+        m_PlayerColumn = MainManager.Instance.GetStageManager().m_PlayerCoulmn;
+        m_BossRow = MainManager.Instance.GetStageManager().m_BossRow;
+        m_BossColumn = MainManager.Instance.GetStageManager().m_BossColumn;
 
 
-        Debug.Log(m_bossSkillSet.m_bossSkillData.Length);
-
-        //for (int i = 0; i < m_bossSkillSet.m_bossSkillData.Length; i++)
-        //{
-        //	Debug.Log("스킬타입:"+m_bossSkillSet.m_bossSkillData[i].SkillType);
-        //	Debug.Log("생존시간:" + m_bossSkillSet.m_bossSkillData[i].lifeTime);
-        //}
 
         StartCoroutine(SkillAction());
+    }
+
+    IEnumerator SkillAction()
+    {
+
+        Debug.Log("스킬 액션 실행");
 
 
+
+        switch ((BossSkillType)m_CurrentBossSkill.SkillType)
+        {
+            case BossSkillType.WIDE:
+                StartCoroutine(SkillWideAction());
+                break;
+            case BossSkillType.TARGET:
+                StartCoroutine(SkillTargetAction());
+                break;
+            case BossSkillType.LINE:
+                StartCoroutine(SkillLineAction());
+                break;
+            case BossSkillType.DIFFUSION:
+                StartCoroutine(SkillDiffusionAction());
+                break;
+        }
+
+        yield break;
+
+        //if (m_CurrentBossSkill.SkillAdded == 0)  //추가스킬이 없다면 스킬이 종료된다 + 스킬 지속시간만큼이 지나면.
+        //	yield break;
+        //else
+        //	BossSkillAction(m_CurrentBossSkill.SkillAdded);
+
+
+
+
+
+        //while (true)
+        //{
+        //	if (skillAction)
+        //	{
+        //		//MainManager.Instance.GetAnimanager().ChangeAnimationState(boss_anim, BOSS_SKILL01, currentState);
+        //		checkSkill = true;
+
+        //		// m_CurrentBossSkill.TargetType 스킬타입 -> 1 아군(쫄몹포함) , 2 적군, 3 모든대상
+        //		// Tag나 Layer등으로 구분하는 것이 좋을 것같다.
+
+
+        //		//m_CurrentBossSkill.SkillDistance -> 해당 스킬의 발동거리(거리안에 해당플레이어가 있을경우 해당스킬발동조건 충족)
+        //		//m_CurrentBossSkill.SkillRange -> 스킬의 범위  
+
+
+        //		// 타켓스킬일 경우 다음에 연계스킬의 시작좌표는 대상을 기준으로 스킬처리
+        //		// 그외의 스킬일 경우 다음에 연계스킬은 보스기준의 좌표로로 스킬처리
+        //		switch((BossSkillType)m_CurrentBossSkill.SkillType)
+        //		{
+        //			case BossSkillType.WIDE:
+        //				StartCoroutine(SkillWideAction());
+        //				break;
+        //			case BossSkillType.TARGET:
+        //				StartCoroutine(SkillTargetAction());
+        //				break;
+        //			case BossSkillType.LINE:
+        //				StartCoroutine(SkillLineAction());
+        //				break;
+        //			case BossSkillType.DIFFUSION:
+        //				StartCoroutine(SkillDiffusionAction());
+        //				break;
+        //		}
+
+        //		skillAction = false;
+
+        //		if (m_CurrentBossSkill.SkillAdded == 0)  //추가스킬이 없다면 스킬이 종료된다 + 스킬 지속시간만큼이 지나면.
+        //			yield break;
+        //		else
+        //			BossSkillAction(m_CurrentBossSkill.SkillAdded);
+        //	}
+
+        //	yield return null;
+        //}
+    }
+
+
+
+    IEnumerator SkillWideAction()
+    {
+
+        Debug.Log("와이드 스킬 실행");
+        //m_CurrentBossSkill.
+        float range = 0;
+
+        range = m_CurrentBossSkill.SkillRange - 1.0f;
+
+        Debug.Log(m_CurrentBossSkill.SkillRange);  //2
+        float xRange = m_CurrentBossSkill.SkillRange + range;
+
+        // 규칙 1
+        // 가운데 줄은 해당 거리+ -1 칸만큼   ex) 범위가 2인스킬의 경우 2+(2-1) = 3칸이 보스 중심의 가장 먼 거리가 되고 대칭으로 -1씩줄어들며 3칸...2칸이됨
+        // ex) 범위가 3인스킬의 경우 3+(3-1) = 5칸이 보스위치의 가장 먼거리가 되고 대칭으로 -1씩 줄어들며 5칸...4칸...3칸으로 칸수가 된다.
+        // 따라서 가운데 범위는 보스가 위치한 좌표를 기준으로 [z,x-(범위-1)]~ [z,x+(범위-1)]한 범위가 된다 ex) [2,2]가 보스위치고 범위가 3이라면 [2,0] ~ [2,4]의 위치로.
+
+        // 규칙 2 
+        // 보스라인이 끝나면 나머지 줄은 대칭해서  ex)  ([z-1,x] / [z+1,x]) | ([z-2,x] / [z+2,x])의     페어형식으로 증가한다.
+
+        // 규칙 3
+        // 보스의 위치가 배열의 0,2,4번째요소(1,3,5번째 줄) 일 경우 제일 마지막배열에서 row값+-1,  column값은 변경이없다. 
+        // 배열의 1,3번째요소(2,4번째 줄) 일 경우 제일 마지막배열에서 row값+-1, column값 +1 값을 해줘야한다.
+
+        if (range > 0)  //range는 -1을한값 범위가 2부터 여기 들어온다. 범위가 1일경우는 해당 타일에 계산하면 된다.
+        {
+
+            Debug.Log($"현재의 xLength는{xRange}");
+            Debug.Log("인디케이터 빨간색으로 칠해줌");
+            Debug.Log($"현재 보스의 좌표는 {m_BossRow}/{m_BossColumn}");
+
+
+            int saveRow = m_BossRow;
+            int saveColumn = 0;
+
+            int checkRow_P;   //보스 기준 아래쪽에 있는 Column값
+            int checkRow_M;   //보스 기준 위쪽에 있는 Column값
+            int checkColumn;  //현재 색을 바꿀 타일의 Column값
+
+            for (float i = 0; i < m_CurrentBossSkill.SkillRange; i += 1.0f)
+            {
+                checkRow_P = m_BossRow + (int)i;
+                checkRow_M = m_BossRow - (int)i;
+
+                if (checkRow_P % 2 == 0) //024(135라인)
+                    saveColumn++;
+
+
+
+                for (float j = 0; j < xRange; j += 1.0f)
+                {
+
+                    if (i != 0) //보스가 있는 라인의 +-1라인씩 그림.
+                    {
+
+                        checkColumn = saveColumn + (int)j;
+
+                        if (checkColumn < 0 || checkColumn > 5)
+                            continue;
+
+
+                        if (checkRow_P < 5)
+                        {
+
+                            map.mapIndicatorArray[checkRow_P, checkColumn].GetComponent<MeshRenderer>().material.color = Color.red;
+
+                            //if(checkRow_P-1 % 2 ==0)
+                            //	map.mapIndicatorArray[checkRow_P, checkColumn].GetComponent<MeshRenderer>().material.color = Color.red;
+                            //else
+                            //	map.mapIndicatorArray[checkRow_P, checkColumn+1].GetComponent<MeshRenderer>().material.color = Color.red;
+                        }
+
+                        if (checkRow_M >= 0)
+                        {
+                            map.mapIndicatorArray[checkRow_M, checkColumn].GetComponent<MeshRenderer>().material.color = Color.red;
+                            //if (checkRow_M-1 % 2 == 0)
+                            //	map.mapIndicatorArray[checkRow_M, checkColumn].GetComponent<MeshRenderer>().material.color = Color.red;
+                            //else
+                            //	map.mapIndicatorArray[checkRow_M, checkColumn+1].GetComponent<MeshRenderer>().material.color = Color.red;
+                        }
+
+
+
+
+                    }
+                    else  //보스가 있는 라인을 쭉그림.
+                    {
+
+                        checkColumn = m_BossColumn - (int)range + (int)j;
+
+                        if (j == 0)
+                            saveColumn = checkColumn;   //보스라인에서 첫번째 타일 색변환위치 저장.
+
+                        if (checkColumn < 0 || checkColumn > 5)
+                            continue;
+
+                        map.mapIndicatorArray[m_BossRow, checkColumn].GetComponent<MeshRenderer>().material.color = Color.red;
+                    }
+
+                    //범위를 알려주고 
+                    //map.mapIndicatorArray[m_BossRow, Mathf.Abs(m_BossColumn - (int)(range + i))].GetComponent<MeshRenderer>().material.color = Color.red;
+
+
+                    //경고시간(모든스킬 0.5f초로 고정)이  경과하면 빨간색을 다시 원래색깔로 돌린후 그 범위에 이펙트 출현하고 데미지 로직 처리.
+                }
+
+                Debug.Log($"{i + 1}번째 SaveColumn={saveColumn}");
+
+                xRange -= 1.0f;
+            }
+
+
+
+            //for(float i=0; i< xRange; i+=1.0f)
+            //{
+
+
+            //	//스킬의 범위만큼 타일을 붉은색으로 칠해주기.
+            //	//map.mapIndicatorArray[m_BossRow, Mathf.Abs(m_BossColumn-(int)(range+i))].GetComponent<MeshRenderer>().material.color = Color.red;
+            //	//MainManager.Instance.GetStageManager().map.mapIndicatorArray[m_BossRow, Mathf.Abs(m_BossColumn - (int)(range + i))].GetComponent<MeshRenderer>().material.color = Color.red;
+            //}
+
+        }
+
+        yield break;
+    }
+
+    IEnumerator SkillTargetAction()
+    {
+        yield return null;
 
     }
+
+    IEnumerator SkillLineAction()
+    {
+
+        yield return null;
+    }
+
+    IEnumerator SkillDiffusionAction()
+    {
+
+        yield return null;
+    }
+
 
 
 
@@ -81,7 +340,15 @@ public class BossSkill : MonoBehaviour
     {
 
         Debug.Log("2");
-        boss_anim.SetInteger("IdleToSkill", 4);
+        //boss_anim.SetInteger("IdleToSkill", 4);
+        //ChangeAnimationState(BOSS_SKILL04);
+        MainManager.Instance.GetAnimanager().ChangeAnimationState(boss_anim, BOSS_SKILL04, currentState);
+
+        //yield return new WaitForSeconds(0.01f);
+        //float curAnimationTime = anim.GetCurrentAnimatorStateInfo(0).length;
+        //yield return new WaitForSeconds(curAnimationTime);
+
+
         checkSkill = true;
 
         dotValue = Mathf.Cos(Mathf.Deg2Rad * (angleRange / 2));
@@ -104,7 +371,7 @@ public class BossSkill : MonoBehaviour
     {
         Debug.Log("3");
 
-        boss_anim.SetInteger("IdleToSkill", 1);
+        MainManager.Instance.GetAnimanager().ChangeAnimationState(boss_anim, BOSS_SKILL01, currentState);
         checkSkill = true;
         ////지정범위내의 모든 플레이어를 찾은 후
         Collider[] colls = Physics.OverlapSphere(transform.position, 15f, 1 << 8);  //8번째 레이어 = Player
@@ -137,7 +404,7 @@ public class BossSkill : MonoBehaviour
     public void Thumderbolt()
     {
         Debug.Log("4");
-        boss_anim.SetInteger("IdleToSkill", 3);
+        MainManager.Instance.GetAnimanager().ChangeAnimationState(boss_anim, BOSS_SKILL03, currentState);
         checkSkill = true;
         StartCoroutine(ThumderboltAction(5.0f, transform.position.x, transform.position.z));
 
@@ -147,7 +414,7 @@ public class BossSkill : MonoBehaviour
     {
 
         Debug.Log("5");
-        boss_anim.SetInteger("IdleToSkill", 2);
+        MainManager.Instance.GetAnimanager().ChangeAnimationState(boss_anim, BOSS_SKILL02, currentState);
         checkSkill = true;
         StartCoroutine(LaserFireAction(target.transform.position, 3f));
 
@@ -156,7 +423,7 @@ public class BossSkill : MonoBehaviour
     public void SpeedDown()
     {
         Debug.Log("6");
-        boss_anim.SetInteger("IdleToSkill", 1);
+        MainManager.Instance.GetAnimanager().ChangeAnimationState(boss_anim, BOSS_SKILL01, currentState);
         checkSkill = true;
 
         //지정범위내의 모든 플레이어를 찾은 후
@@ -175,49 +442,14 @@ public class BossSkill : MonoBehaviour
     {
 
         Debug.Log("7");
-        boss_anim.SetInteger("IdleToSkill", 3);
+        MainManager.Instance.GetAnimanager().ChangeAnimationState(boss_anim, BOSS_SKILL03, currentState);
         checkSkill = true;
 
         StartCoroutine(MonsterSummonAction(10, transform.position.x, transform.position.z));
     }
 
 
-    IEnumerator SkillAction()
-    {
 
-        while (true)
-        {
-            if (skillAction)
-            {
-                boss_anim.SetInteger("IdleToSkill", 1);
-                checkSkill = true;
-
-                switch (m_bossSkillSet.m_bossSkillData[m_SkillCheck].SkillType)
-                {
-                    case BossSkillType.WIDE:
-                        StartCoroutine(ThumderboltAction(m_bossSkillSet.m_bossSkillData[m_SkillCheck].lifeTime, transform.position.x, transform.position.z));
-                        break;
-                    case BossSkillType.TARGET:
-                        StartCoroutine(ThumderboltAction(m_bossSkillSet.m_bossSkillData[m_SkillCheck].lifeTime, target.transform.position.x, target.transform.position.z));
-                        break;
-                    case BossSkillType.LINE:
-                        StartCoroutine(LaserFireAction(target.transform.position, m_bossSkillSet.m_bossSkillData[m_SkillCheck].lifeTime));
-                        break;
-                    case BossSkillType.DIFFUSION:
-                        break;
-                    case BossSkillType.SUMMONS:
-                        break;
-                }
-
-                m_SkillCheck++;
-                skillAction = false;
-
-                if (m_bossSkillSet.m_bossSkillData.Length == m_SkillCheck)  //while문 탈출지점.
-                    yield break;
-            }
-            yield return null;
-        }
-    }
 
 
 
@@ -396,12 +628,16 @@ public class BossSkill : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        //m_CurrentBossStat = DataTableManager.Instance.GetDataTable<BossStat_TableExcelLoader>().DataList[0];
         boss_anim = transform.GetChild(0).GetComponent<Animator>();
 
+        //map = GameObject.Find("MapManager").GetComponent<Map>();
 
-        m_bossSkillSet = transform.GetComponent<BossSkillSet>();
+        map = MainManager.Instance.GetStageManager().map;
+
+        //m_bossSkillSet = transform.GetComponent<BossSkillSet>();
     }
+
 
     // Update is called once per frame
     void Update()
@@ -420,8 +656,8 @@ public class BossSkill : MonoBehaviour
         else
             isCollision = false;
 
-        if (Input.GetKeyDown(KeyCode.Keypad1))
-            SettingSkillAction();
+        //if (Input.GetKeyDown(KeyCode.Keypad1))
+        //    SettingSkillAction();
 
         if (Input.GetKeyDown(KeyCode.Keypad2))
             Pull();
@@ -446,11 +682,15 @@ public class BossSkill : MonoBehaviour
         if (checkSkill)
         {
             checkTime += Time.deltaTime;
-            if (checkTime > 1.2f)
+
+            if (checkTime > boss_anim.GetCurrentAnimatorStateInfo(0).length)
             {
                 checkSkill = false;
                 checkTime = 0f;
-                boss_anim.SetInteger("IdleToSkill", 0);
+
+                //boss_anim.SetInteger("IdleToSkill", 0);
+
+                MainManager.Instance.GetAnimanager().ChangeAnimationState(boss_anim, BOSS_IDLE, currentState);
             }
         }
 

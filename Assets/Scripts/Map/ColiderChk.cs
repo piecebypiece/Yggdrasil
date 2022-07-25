@@ -8,11 +8,17 @@ public class ColiderChk : MonoBehaviour
     MeshRenderer mesh;
     Material mat;
 
+    public int m_row;
+    public int m_coulmn;
+
     private void OnTriggerStay(Collider other)
     {
-        if(other.gameObject.CompareTag("Object"))
+        //플레이어로 변경.
+        if(other.gameObject.CompareTag("Player"))
         {
             Debug.Log("오브젝트들어옴");
+
+            MainManager.Instance.GetStageManager().SetPlayerRowAndCoulmn(m_row, m_coulmn);
             coliderchk = true;
             mat.color = new Color(1, 0, 0);
         }

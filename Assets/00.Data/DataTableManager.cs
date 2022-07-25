@@ -11,6 +11,7 @@ public enum E_DataTableType
     CharStat,
     SoulStat,
     Map,
+    BossSkill,
 
     Max
 }
@@ -54,6 +55,12 @@ public class DataTableManager : Singleton_Ver1.Singleton<DataTableManager>
 
     private void Awake()
     {
+        UnityEngine.Object[] tempResource = Resources.LoadAll("ExcelDataObject");
+        foreach (var element in tempResource)
+        {
+            m_DataTableList.Add((ScriptableObject)element);
+        }
+
         m_DataTables = new Dictionary<E_DataTableType, ScriptableObject>();
 
         for (E_DataTableType i = E_DataTableType.None + 1; i < E_DataTableType.Max; ++i)

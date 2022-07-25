@@ -37,10 +37,14 @@ public class Map : MonoBehaviour
     //충돌 이후의 색상
     public Color indicatorActiveColor;
 
+
+    
     void Start()
     {
         CreateGridPosition();
         CreateIndicators();
+
+
     }
 
     //맵 그리드 포지션 위치를 벡터의 배열에 저장

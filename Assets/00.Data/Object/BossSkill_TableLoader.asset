@@ -1,0 +1,146 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10e9b7d2d5391a8469b9ccb0e15473fd, type: 3}
+  m_Name: BossSkill_TableLoader
+  m_EditorClassIdentifier: 
+  filepath: Assets\00.Data\Txt\BossSkill_Table.txt
+  DataList:
+  - No: 1
+    Name_KR: "\uC2A4\uD0AC1"
+    Name_EN: A
+    BossIndex: 101001
+    TargetType: 2
+    Power: 10
+    CoolTime: 1
+    SkillDistance: 3
+    SkillRange: 1
+    SkillType: 1
+    UseStat: 10
+    Direction1: 0
+    Direction2: 0
+    Direction3: 0
+    Direction4: 0
+    Direction5: 0
+    Direction6: 0
+    PlaceShift: 0
+    LifeTime: 1
+    DoT: 1
+    SkillAdded: 101002
+    BuffAdded: 0
+    SkillAnimation: 1
+    LunchPrefb: 0
+    FirePrefb: 0
+    DamPrefb: 0
+  - No: 2
+    Name_KR: "\uC2A4\uD0AC2"
+    Name_EN: B
+    BossIndex: 101002
+    TargetType: 2
+    Power: 10
+    CoolTime: 0
+    SkillDistance: 0
+    SkillRange: 2
+    SkillType: 2
+    UseStat: 0
+    Direction1: 0
+    Direction2: 0
+    Direction3: 0
+    Direction4: 0
+    Direction5: 0
+    Direction6: 0
+    PlaceShift: 0
+    LifeTime: 5
+    DoT: 1
+    SkillAdded: 0
+    BuffAdded: 0
+    SkillAnimation: 2
+    LunchPrefb: 0
+    FirePrefb: 0
+    DamPrefb: 0
+  - No: 3
+    Name_KR: "\uC2A4\uD0AC3"
+    Name_EN: C
+    BossIndex: 101003
+    TargetType: 2
+    Power: 10
+    CoolTime: 3
+    SkillDistance: 2
+    SkillRange: 1
+    SkillType: 3
+    UseStat: 20
+    Direction1: 0
+    Direction2: 0
+    Direction3: 0
+    Direction4: 0
+    Direction5: 0
+    Direction6: 0
+    PlaceShift: 0
+    LifeTime: 1
+    DoT: 1
+    SkillAdded: 101004
+    BuffAdded: 0
+    SkillAnimation: 3
+    LunchPrefb: 0
+    FirePrefb: 0
+    DamPrefb: 0
+  - No: 3
+    Name_KR: "\uC2A4\uD0AC4"
+    Name_EN: D
+    BossIndex: 101004
+    TargetType: 3
+    Power: 10
+    CoolTime: 0
+    SkillDistance: 0
+    SkillRange: 3
+    SkillType: 4
+    UseStat: 0
+    Direction1: 0
+    Direction2: 0
+    Direction3: 0
+    Direction4: 0
+    Direction5: 0
+    Direction6: 0
+    PlaceShift: 0
+    LifeTime: 10
+    DoT: 1
+    SkillAdded: 0
+    BuffAdded: 0
+    SkillAnimation: 2
+    LunchPrefb: 0
+    FirePrefb: 0
+    DamPrefb: 0
+  - No: 3
+    Name_KR: "\uC2A4\uD0AC5"
+    Name_EN: E
+    BossIndex: 101005
+    TargetType: 1
+    Power: 10
+    CoolTime: 4
+    SkillDistance: 0
+    SkillRange: 1
+    SkillType: 1
+    UseStat: 30
+    Direction1: 0
+    Direction2: 0
+    Direction3: 0
+    Direction4: 0
+    Direction5: 0
+    Direction6: 0
+    PlaceShift: 0
+    LifeTime: 1
+    DoT: 1
+    SkillAdded: 101001
+    BuffAdded: 102001
+    SkillAnimation: 4
+    LunchPrefb: 0
+    FirePrefb: 0
+    DamPrefb: 0
